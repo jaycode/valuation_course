@@ -6,3 +6,4 @@ def pv_of_annuity(cashflow, num_periods, interest):
 
 if __name__ == "__main__":
     print(pv_of_annuity(125 * 0.08, 10, 0.04))
+    # 81.10895779355035

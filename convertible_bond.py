@@ -8,5 +8,12 @@ def straight_debt(face_value, maturity_years, debt_interest_rate, bond_interest_
 
     return sd
 
+def equity_portion(market_value, straight_debt):
+    return market_value - straight_debt
+
 if __name__ == "__main__":
-    print(straight_debt(125, 10, 0.04, 0.08))
+    sd = straight_debt(125, 10, 0.04, 0.08)
+    print("straight debt:", sd)
+    # straight debt: 91.44959300529275
+    print("equity portion:", equity_portion(140, sd))
+    # equity portion: 48.550406994707245

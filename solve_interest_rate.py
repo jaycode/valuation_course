@@ -10,7 +10,7 @@ if __name__ == "__main__":
                    71.75/(1+r)**4 + 75.34/(1+r)**5 + \
                    75.35*(1.0402)/((r-0.0402)*(1+r)**5)-1468.36, r)
     print("all results:")
-    print(result)
+    print(result) # 0.0838730207738123
     print("final result")
     for rs in result:
         try:
