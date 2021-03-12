@@ -17,3 +17,11 @@ if __name__ == "__main__":
 
     ncwc_diff = ncwc_last_year - ncwc_this_year
     print("Non-Cash Working Capital difference:", ncwc_diff)
+
+# Output
+
+"""
+Non-Cash Working Capital last year: 85
+Non-Cash Working Capital this year: 125
+Non-Cash Working Capital difference: -40
+"""

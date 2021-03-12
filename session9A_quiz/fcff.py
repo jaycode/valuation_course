@@ -30,3 +30,16 @@ if __name__ == "__main__":
     print("Next year estimated Free CashFlow to Firm:")
     print("{} * {} - {} - {} = {}".format(net_income, (1+next_year_rev_growth),
                                     expected_capex, ncwc_diff, fcff))
+
+# Output
+
+"""
+Next year revenue: 110.0
+Non-Cash Working Capital: -10
+% of Revenue: -0.1
+Next year estimated Non-Cash Working Capital: -11.0
+Changes in Non-Cash Working Capital:
+-11.0 - -10 = -1.0
+Next year estimated Free CashFlow to Firm:
+20 * 1.1 - 10 - -1.0 = 13.0
+"""

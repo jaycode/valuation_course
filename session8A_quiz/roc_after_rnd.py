@@ -47,3 +47,7 @@ if __name__ == "__main__":
 
     print(roc_after_rnd(args.invested_capital, args.operating_income,
                         args.expenses))
+
+# Default output
+
+# 0.021739130434782608

@@ -10,6 +10,13 @@ if __name__ == "__main__":
 
     debt_repayment = prev_debt - debt
     print("Debt repayment:", debt_repayment)
-    
+
     fcfe = (fcff - debt_repayment - interest_expense*(1-tax_rate))
     print("Free CashFlow to Equity:", fcfe)
+
+# Output
+
+"""
+Debt repayment: 15
+Free CashFlow to Equity: 28.0
+"""

@@ -45,3 +45,26 @@ if __name__ == "__main__":
 
     print(cumtax(args.total_net_losses, args.future_cashflows,
                  args.marginal_tax_rate))
+
+
+# Default output
+
+"""
+Year 1
+current year tax to pay: 0
+Net Operating Loss: 150
+---
+Year 2
+current year tax to pay: 0
+Net Operating Loss: 75
+---
+Year 3
+current year tax to pay: 20.0
+Net Operating Loss: 0
+---
+Year 4
+current year tax to pay: 50.0
+Net Operating Loss: 0
+---
+[0, 0, 20.0, 50.0]
+"""

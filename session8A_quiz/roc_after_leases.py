@@ -35,3 +35,10 @@ if __name__ == "__main__":
     print(roc_after_leases(args.invested_capital, args.operating_income,
                            args.first_lease, args.next_lease,
                            args.lease_periods, args.cost_of_debt))
+
+# Default output
+
+"""
+lease outstanding: 134.65489749900806
+0.1277393114171887
+"""

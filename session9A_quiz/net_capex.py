@@ -22,3 +22,7 @@ if __name__ == "__main__":
 
     print(net_capex(args.previous_capex, args.depam,
                     args.acquisitions))
+
+# Default output:
+
+# 60
