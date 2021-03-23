@@ -1,4 +1,5 @@
 # Session 10A post-class test problem 2
+# This is the growth of income the firm makes from non-cash equity.
 # http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session10Atest.pdf
 
 def non_cash_income_growth_prep(
@@ -40,4 +41,3 @@ if __name__ == "__main__":
             args.capital_expenditure, args.wc_diff,
             args.total_debt_increase))
     # 0.03333333333333333
-    

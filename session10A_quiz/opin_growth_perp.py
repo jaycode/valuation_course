@@ -1,4 +1,5 @@
 # Session 10A post-class test problem 3
+# This is the growth of after-tax operating income the firm makes from non-cash equity.
 # http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session10Atest.pdf
 
 def opin_growth_prep(

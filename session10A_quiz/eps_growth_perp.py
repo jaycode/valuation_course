@@ -1,4 +1,5 @@
 # Session 10A post-class test problem 1
+# This is the earnings equity investors make.
 # http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session10Atest.pdf
 
 def eps_growth_perp(net_income, dividend, book_value):
