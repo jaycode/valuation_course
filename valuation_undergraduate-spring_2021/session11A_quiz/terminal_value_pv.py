@@ -1,7 +1,9 @@
 # Session 11A post-class test problem 3
 # http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session11atest.pdf
 
-from terminal_fcff import terminal_fcff
+import sys
+sys.path.append("../../")
+from modules.valuation import terminal_value
 
 def pv(fv, interest_rate, num_periods):
     return fv / (1 + interest_rate)**num_periods
@@ -9,7 +11,7 @@ def pv(fv, interest_rate, num_periods):
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(
-        description="PV of Terminal value of FCFF after some number of years")
+        description="PV of Terminal value after some number of years")
     parser.add_argument("-oi", "--exp_atax_opin", help="Expected after-tax operating income",
                         type=float, default=80)
     parser.add_argument("-troc", "--terminal_roc",
@@ -30,7 +32,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    fcff = terminal_fcff(args.exp_atax_opin, args.terminal_roc,
-                         args.terminal_coc, args.terminal_growth_rate)
-    print(pv(fcff, args.coc, args.num_years))
+    tv = terminal_value(args.exp_atax_opin, args.terminal_roc,
+                        args.terminal_coc, args.terminal_growth_rate)
+    print(pv(tv, args.coc, args.num_years))
     # 257.5785892725567

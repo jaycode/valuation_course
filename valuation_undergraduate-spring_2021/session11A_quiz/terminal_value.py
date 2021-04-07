@@ -1,16 +1,28 @@
 # Session 11A post-class test problem 2
 # http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session11atest.pdf
 
-def terminal_fcff(
-    exp_atax_opin, terminal_roc, terminal_coc, terminal_growth_rate):
-    reinvestment_rate = terminal_growth_rate / terminal_roc
-    fcff = exp_atax_opin * (1 - reinvestment_rate) / (terminal_coc - terminal_growth_rate)
-    return fcff
+"""
+Avalon Inc. is a high growth publicly traded firm that is expected to become a
+stable growth firm after 5 years. You have estimated an expected after-tax
+operating income of $60 million in year 6 and believe that the firm will generate
+a return on capital of 12% in perpetuity. If the cost of capital is 10% and the
+expected growth rate in perpetuity after year 5 is 3%, what will the terminal
+value be at the end of year 5?
+a. $857.14 million
+b. $666.67 million
+c. $642.86 million
+d. $450 million
+e. None of the above
+"""
+
+import sys
+sys.path.append("../../")
+from modules.valuation import terminal_value
 
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(
-        description="Terminal value of FCFF after some number of years")
+        description="Terminal value after some number of years")
     parser.add_argument("-oi", "--exp_atax_opin", help="Expected after-tax operating income",
                         type=float, default=60)
     parser.add_argument("-troc", "--terminal_roc",
@@ -25,6 +37,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    print(terminal_fcff(args.exp_atax_opin, args.terminal_roc,
-                        args.terminal_coc, args.terminal_growth_rate))
+    print(terminal_value(args.exp_atax_opin, args.terminal_roc,
+                         args.terminal_coc, args.terminal_growth_rate))
     # 642.8571428571428

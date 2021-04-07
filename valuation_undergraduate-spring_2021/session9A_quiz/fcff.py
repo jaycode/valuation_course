@@ -1,6 +1,21 @@
 # Session 9A post-class test problem 3
 # http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session9Atest.pdf
 
+"""
+Tymba Inc. generated $20 million in after-tax operating income on revenues of
+$100 million during the course of the most recent year. You expect revenues to
+grow 10% a year next year and margins to stay stable. The firm’s non-cash
+current assets are $40 million and its non-debt current liabilities are $50 million,
+and non-cash working capital as a percent of revenues is expected to remain
+unchanged next year. If the net cap ex is expected to be $10 million next year,
+what is your estimate of the FCFF for the next year?
+a. $13 million
+b. $11 million
+c. $8 million
+d. $23 million
+e. None of the above
+"""
+
 if __name__ == "__main__":
     net_income = 20
     revenue = 100
