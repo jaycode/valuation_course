@@ -32,9 +32,13 @@
 - Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session9Atest.pdf
 - Post-class Test Solution: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session9Asoln.pdf
 
-## Session 14:
+## Session 14: More on stories & numbers and first valuations!
 - Video: https://www.youtube.com/watch?v=uj5xrGBFf44&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=15
 - Start-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/storytest.pdf (link broken)
 - Slides: http://people.stern.nyu.edu/adamodar/podcasts/valUGspr21/session14slides.pdf
 - Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session14aXtest.pdf
 - Post-class Test Solution: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session14aXsoln.pdf
+
+## Valuation Quiz 2 Review
+- Video: https://www.youtube.com/watch?v=VzFkMJm3Qe8&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=16
+- Slides: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/valquiz2review.pdf

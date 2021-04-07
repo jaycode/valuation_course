@@ -150,7 +150,11 @@ if __name__ == "__main__":
     else:
         print("Stock price is valued the same with the market (impossibru!)")
 
-    # parent_fcff = fcff(adjusted_opin, roc, coc, growth_rate)
-    # print("Smithtown Works + Kroger FCFF:", parent_fcff)
-    # vps = parent_fcff / shares_outstanding
-    # print("Smithtown Works value per share:", vps)
+    # Output:
+    # 
+    # 1500 * (1 - 0.19999999999999998) * (1 + 0.02) / (0.08 - 0.02) = 20400.0
+    # Smithtown Works + Kroger Terminal Value: 20400.0
+    # Value of Haverford Steel: 1088.0
+    # Value of equity in Smithtown: 14488.0
+    # Market Value of Equity in Smithtown: 15000
+    # Stock is overvalued by 512.0 million
