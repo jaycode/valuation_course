@@ -32,6 +32,12 @@
 - Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session9Atest.pdf
 - Post-class Test Solution: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session9Asoln.pdf
 
+## Session 10: Growth Rates - Historical, Analyst and Fundamental
+- Video: https://www.youtube.com/watch?v=xBfE6rUvCKk&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=11
+- Slides: http://people.stern.nyu.edu/adamodar/podcasts/valUGspr21/session10slides.pdf
+- Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session10Atest.pdf
+- Post-class Test Solution: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session10Asoln.pdf
+
 ## Session 14: More on stories & numbers and first valuations!
 - Video: https://www.youtube.com/watch?v=uj5xrGBFf44&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=15
 - Start-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/storytest.pdf (link broken)
