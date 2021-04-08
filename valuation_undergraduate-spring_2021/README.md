@@ -38,6 +38,20 @@
 - Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session10Atest.pdf
 - Post-class Test Solution: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session10Asoln.pdf
 
+## Session 12: Cash, Cross holdings and Other Assets
+- Video: https://www.youtube.com/watch?v=Kj_PCAki2rg&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=17
+- Start-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/looseends.pdf (link broken)
+- Slides: http://people.stern.nyu.edu/adamodar/podcasts/valUGspr21/session12slides.pdf
+- Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session12atest.pdf
+- Post-class Test Solution: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session12asoln.pdf
+
+## Session 13: Last loose ends plus Stories & Numbers
+- Video: https://www.youtube.com/watch?v=wF8ckYZNrsM&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=14
+- Start-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/looseends2.pdf (link broken)
+- Slides: http://people.stern.nyu.edu/adamodar/podcasts/valUGspr21/session13slides.pdf
+- Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session13btest.pdf
+- Post-class Test Solution: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session13bsoln.pdf
+
 ## Session 14: More on stories & numbers and first valuations!
 - Video: https://www.youtube.com/watch?v=uj5xrGBFf44&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=15
 - Start-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/storytest.pdf (link broken)
