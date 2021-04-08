@@ -22,7 +22,7 @@ def project_roic(projection, invested_capital, sales_to_capital_ratio):
 
         p.loc['return_on_capital', y] = \
             p.loc['operating_income', y] / p.loc['invested_capital', y]
-    return projection
+    return p
 
 if __name__ == "__main__":
     projection = pd.DataFrame(
