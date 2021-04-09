@@ -46,18 +46,35 @@
 - Post-class Test Solution: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session12asoln.pdf
 
 ## Session 13: Last loose ends plus Stories & Numbers
-- Video: https://www.youtube.com/watch?v=wF8ckYZNrsM&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=14
+- Video: https://www.youtube.com/watch?v=wF8ckYZNrsM&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=13
 - Start-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/looseends2.pdf (link broken)
 - Slides: http://people.stern.nyu.edu/adamodar/podcasts/valUGspr21/session13slides.pdf
 - Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session13btest.pdf
 - Post-class Test Solution: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session13bsoln.pdf
 
 ## Session 14: More on stories & numbers and first valuations!
-- Video: https://www.youtube.com/watch?v=uj5xrGBFf44&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=15
+- Video: https://www.youtube.com/watch?v=uj5xrGBFf44&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=14
 - Start-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/storytest.pdf (link broken)
 - Slides: http://people.stern.nyu.edu/adamodar/podcasts/valUGspr21/session14slides.pdf
 - Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session14aXtest.pdf
 - Post-class Test Solution: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session14aXsoln.pdf
+
+## Session 15: Valuing the market and young companies
+- Video: https://www.youtube.com/watch?v=JNw19jICg4E&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=15
+- Start-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/dcfvaltests.pdf (link broken)
+- Slides: http://people.stern.nyu.edu/adamodar/podcasts/valUGspr21/session15slides.pdf
+- Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session15Btest.pdf
+- Post-class Test Solution: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session15Bsoln.pdf
+
+## Session 16: Valuing the market and young companies
+- Video: https://www.youtube.com/watch?v=IYAU_UJenIs&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=18
+- Slides: http://people.stern.nyu.edu/adamodar/podcasts/valUGspr21/session16slides.pdf
+
+## Session 17: Valuing the market and young companies
+- Video: https://www.youtube.com/watch?v=8r2R5th41cU&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=20
+- Slides: http://people.stern.nyu.edu/adamodar/podcasts/valUGspr21/session17slides.pdf
+- Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session17Dtest.pdf
+- Post-class Test Solution: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session17Dsoln.pdf
 
 ## Valuation Quiz 2 Review
 - Video: https://www.youtube.com/watch?v=VzFkMJm3Qe8&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=16
