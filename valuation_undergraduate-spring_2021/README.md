@@ -70,7 +70,7 @@
 - Video: https://www.youtube.com/watch?v=IYAU_UJenIs&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=18
 - Slides: http://people.stern.nyu.edu/adamodar/podcasts/valUGspr21/session16slides.pdf
 
-## Session 17: Valuing the market and young companies
+## Session 17: More excursions on the dark side of valuation
 - Video: https://www.youtube.com/watch?v=8r2R5th41cU&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=20
 - Slides: http://people.stern.nyu.edu/adamodar/podcasts/valUGspr21/session17slides.pdf
 - Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session17Dtest.pdf
