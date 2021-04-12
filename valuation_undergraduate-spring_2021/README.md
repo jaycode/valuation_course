@@ -22,8 +22,15 @@
 - Video: https://www.youtube.com/watch?v=pjdytSQhG5E&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=5
 - Start-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/tests/riskfree.pdf
 - Slides: http://people.stern.nyu.edu/adamodar/podcasts/valUGspr21/session4slides.pdf
-- Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session3test.pdf
+- Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session7Atest.pdf
 - Post-class Test Solution: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session3soln.pdf
+
+## Session 7: Betas and beyond!
+- Video: https://www.youtube.com/watch?v=p6QI80ypgZk&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=9
+- Start-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/tests/beta.pdf
+- Slides: http://people.stern.nyu.edu/adamodar/podcasts/valUGspr21/session7slides.pdf
+- Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session9Atest.pdf
+- Post-class Test Solution: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session7Asoln.pdf
 
 ## Session 9: Earnings to Cash Flows
 - Video: https://www.youtube.com/watch?v=r2_ZVAowM5Y&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=10
@@ -71,10 +78,16 @@
 - Slides: http://people.stern.nyu.edu/adamodar/podcasts/valUGspr21/session16slides.pdf
 
 ## Session 17: More excursions on the dark side of valuation
-- Video: https://www.youtube.com/watch?v=8r2R5th41cU&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=20
+- Video: https://www.youtube.com/watch?v=8r2R5th41cU&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=21
 - Slides: http://people.stern.nyu.edu/adamodar/podcasts/valUGspr21/session17slides.pdf
 - Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session17Dtest.pdf
 - Post-class Test Solution: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session17Dsoln.pdf
+
+## Session 18: A wrap on intrinsic value
+- Video: https://www.youtube.com/watch?v=JDsYSp-B9Ac&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=20
+- Slides: http://people.stern.nyu.edu/adamodar/podcasts/valUGspr21/session18slides.pdf
+- Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session18Ctest.pdf
+- Post-class Test Solution: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session18Csoln.pdf
 
 ## Valuation Quiz 2 Review
 - Video: https://www.youtube.com/watch?v=VzFkMJm3Qe8&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC&index=16
