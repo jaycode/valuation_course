@@ -5,7 +5,7 @@ Various code snippets for the Valuation Course by Prof. Aswath Damodaran ~ my fa
 These functions and formulas were taken directly from this Excel spreadsheet: [Valuation of GameStop (January 28, 2021)](http://www.stern.nyu.edu/~adamodar/pc/blog/GameStop2021.xlsx)
 
 ### How to read this Cheatsheet
-Each component in this cheatsheet is nested at an increasing level. I have also indented with the dash (`-`) character to make the nesting a bit easier to visually distinguish.
+Each component in this cheatsheet is nested at increasing levels. I have also indented with the dash (`-`) character to make the nesting a bit easier to visually distinguish.
 
 You may click on the heading of each component to toggle the detailed view of that component and its child components.
 
