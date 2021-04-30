@@ -9,7 +9,7 @@ Each component in this cheatsheet is nested at increasing levels. I have also in
 
 You may click on the heading of each component to toggle the detailed view of that component and its child components.
 
-Reading linearly is not advisable, you will quickly get lost once the levels reaches 10+ deep. Make use of the "Used In" and "Components" links to navigate through the formulas.
+Reading linearly is not advisable, you will quickly get lost once the levels reaches 10+ deep. Make use of the "Used In", "Components", and "Details" links to navigate through the formulas.
 
 ---
 
