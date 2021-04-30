@@ -2,10 +2,18 @@
 Various code snippets for the Valuation Course by Prof. Aswath Damodaran ~ my favorite person in finance.
 
 ## Formulas
-
 These formulas were taken directly from this Excel spreadsheet: [Valuation of GameStop (January 28, 2021)](http://www.stern.nyu.edu/~adamodar/pc/blog/GameStop2021.xlsx)
 
-<details open><summary><b>-(lv1) Value of Equity in Common Stock</b></summary>
+### How to read the Formulas
+Each formula is nested at an increasing level. I have also indented with the dash (`-`) character to make the nesting a bit easier to visually distinguish.
+
+You may click on the heading of each component to toggle the detailed view of that component and its child components.
+
+Reading linearly is not advisable, you will quickly get lost once the levels reaches 10+ deep. Make use of the "Used In" and "Components" links to navigate through the formulas.
+
+---
+
+<details open id="value-of-equity-in-common-stocks"><summary><b>-(lv1) Value of Equity in Common Stock</b></summary>
 
 This is the final value that we are looking for. Divided by the number of shares, this becomes the Value/Share, that can be directly compared with the current price of the stock to determine whether it is under/overvalued.
 
@@ -13,15 +21,27 @@ This is the final value that we are looking for. Divided by the number of shares
 Value of Equity in Common Stock = Value of Equity - Value of Options
 ```
 
+#### Components
+- [Value of Equity](#value-of-equity)
+- [Value of Options](#value-of-options)
+
 <details open id="value-of-equity"><summary><b>--(lv2) Value of Equity</b></summary>
 
 ```
-Value of Equity = Value of operating assets - Debt - Minority Interests + Cash + Cash from new issue + Non-operating assets
+Value of Equity = Value of operating assets - Debt - Minority Interests + Cash + Cash from new issue + Non-operating Assets
 ```
+
+#### Used In
+- [Value of Equity in Common Stocks](#value-of-equity-in-common-stocks)
 
 #### Components
 
 - [Value of operating assets](#value-of-operating-assets)
+- [Debt](#debt)
+- [Minority Interests](#minority-interests)
+- [Cash](#cash)
+- [Cash from new issue](#cash-from-new-issue)
+- [Non-operating Assets](#non-operating-assets)
 
 <details open id="value-of-operating-assets"><summary><b>---(lv3) Value of operating assets</b></summary>
 
@@ -99,7 +119,7 @@ FCFF = After-tax EBIT - Reinvestment
 There are three flavors of After-tax EBIT:
 
 **After-tax EBIT for the first year**
-This measure is calculated with the following function:
+This component is calculated with the following function:
 
 ```
 IF EBIT > 0:
@@ -116,7 +136,7 @@ After-tax EBIT = EBIT * (1 - Tax Rate for EBIT calculation)
 ```
 
 **After-tax EBIT for the next year until the terminal year**
-This measure is calculated with the following function:
+This component is calculated with the following function:
 
 ```
 IF EBIT > 0:
@@ -336,9 +356,8 @@ Terminal ROIC is determined first, and then calculate other parts of the DCF val
 
 Start by determining the ROIC for the terminal year with the following function:
 
-The basic assumption is the firm will earn a "Return on Capital" equal to its "Cost of Capital" at maturity. This assumes that whatever competitive advantages the company has today will fade over time.
+The default assumption is the firm will earn a "Return on Capital" equal to its "Cost of Capital" at maturity. This assumes that whatever competitive advantages the company has today will fade over time.
 ```
-IF('Input sheet'!B46="Yes",'Input sheet'!B47,'Valuation output'!L12)
 IF override fading competitive advantages assumption:
     use Expected ROIC at Maturity
 ELSE:
@@ -410,13 +429,13 @@ Market Value of Equity = Number of Shares Outstanding * Current Market Price per
 #### Used In
 - [Weight of Equity in COC](#weight-of-equity-in-coc)
 - [Market Value of Capital Structure](#market-value-of-capital-structure)
-
+- [Levered Beta for Equity](#levered-beta-for-equity)
 
 </details for="(lv15) Market Value of Equity">
 
 <details open id="market-value-of-capital-structure"><summary><b>---------------(lv15) Market Value of Capital Structure</b></summary>
 
-This measure is composed of the total market cap and liabilities of a company.
+This component is composed of the total market cap and liabilities of a company.
 
 ```
 Market Value of Capital Structure = Market Value of Equity + Market Value of Debt + Market Value of Preferred Stock
@@ -439,7 +458,7 @@ Market Value of Capital Structure = Market Value of Equity + Market Value of Deb
 <details open id="cost-of-equity"><summary><b>--------------(lv14) Cost of Equity (COE)</b></summary>
 
 ```
-Cost of Equity = Riskfree Rate + Levered Beta for Equity * Equity Risk Premium
+Cost of Equity = Riskfree Rate + Levered Beta for Equity * ERP used in COC
 ```
 
 #### Used In
@@ -448,7 +467,7 @@ Cost of Equity = Riskfree Rate + Levered Beta for Equity * Equity Risk Premium
 #### Components
 - [Riskfree Rate](#riskfree-rate)
 - [Levered Beta for Equity](#levered-beta-for-equity)
-- [Equity Risk Premium](#equity-risk-premium)
+- [ERP used in COC](#erp-used-in-coc)
 
 <details open id="riskfree-rate"><summary><b>---------------(lv15) Riskfree Rate</b></summary>
 This should be today's long term riskfree rate. If you are working with a currency where the government has default risk, clean up the government bond rate to make it riskfree (by subtracting the default spread for the government).
@@ -525,6 +544,7 @@ Est. Market Value of Debt = Est. Market Value of Straight Debt + Est. Market Val
 #### Used In
 - [Levered Beta for Equity](#levered-beta-for-equity)
 - [Market Value of Capital Structure](#market-value-of-capital-structure)
+- [Weight of Debt in COC](#weight-of-debt-in-coc)
 
 #### Components
 - [Est. Market Value of Straight Debt](#est-market-value-of-straight-debt)
@@ -562,6 +582,8 @@ ELSE ("Actual Rating"):
 
 #### Used In
 - [Est. Market Value of Straight Debt](#est-market-value-of-straight-debt)
+- [Est. Market Value of Straight Debt in Convertible](#est-market-value-of-straight-debt-in-convertible)
+- [Cost of Debt](#cost-of-debt)
 
 #### Components
 - ["Estimated Cost of Debt" in the "Synthetic Rating" sheet](#estimated-cost-of-debt-in-the-synthetic-rating-sheet)
@@ -627,6 +649,53 @@ Interest Expense on Convertible * (1 - (1 + Pre-tax Cost of Debt) ** (-Maturity 
 - [Book Value of Convertible Debt](#book-value-of-convertible-debt)
 - [Market Value of Convertible](#market-value-of-convertible)
 
+<details open id="book-value-of-convertible-debt"><summary><b>------------------(lv18) Book Value of Convertible Debt</b></summary>
+
+*Todo: Clarify*
+
+From [AVC.com](https://avc.com/2011/07/financing-options-convertible-debt/):
+
+> Convertible debt is when a company borrows money from an investor or a group of investors and the intention of both the investors and the company is to convert the debt to equity at some later date. Typically the way the debt will be converted into equity is specified at the time the loan is made. Sometimes there is compensation in the form of a discount or a warrant. Other times there is not. Sometimes there is a cap on the valuation at which the debt will convert. Other times there is not.
+
+The typical forms of compensation for making a convertible loan are warrants or a discount.
+
+#### Used In
+- [Est. Market Value of Straight Debt in Convertible](#est-market-value-of-straight-debt-in-convertible)
+
+</details for="(lv18) Book Value of Convertible Debt">
+
+<details open id="interest-expense-on-convertible"><summary><b>------------------(lv18) Interest Expense on Convertible</b></summary>
+
+*Todo: Clarify*
+
+Interest expense on [convertible debts](#book-value-of-convertible-debt)
+
+#### Used In
+- [Est. Market Value of Straight Debt in Convertible](#est-market-value-of-straight-debt-in-convertible)
+
+</details for="(lv18) Interest Expense on Convertible">
+
+<details open id="maturity-of-convertible-bond"><summary><b>------------------(lv18) Maturity of Convertible Bond</b></summary>
+
+*Todo: Clarify*
+
+From [Investopedia](https://www.investopedia.com/terms/c/convertiblebond.asp):
+
+> A convertible bond is a fixed-income corporate debt security that yields interest payments, but can be converted into a predetermined number of common stock or equity shares. The conversion from the bond to stock can be done at certain times during the bond's life and is usually at the discretion of the bondholder.
+
+#### Used In
+- [Est. Market Value of Straight Debt in Convertible](#est-market-value-of-straight-debt-in-convertible)
+
+</details for="(lv18) Maturity of Convertible Bond">
+
+<details open id="market-value-of-convertible"><summary><b>------------------(lv18) Market Value of Convertible</b></summary>
+
+*Todo: Clarify*
+
+#### Used In
+- [Est. Market Value of Straight Debt in Convertible](#est-market-value-of-straight-debt-in-convertible)
+
+</details for="(lv18) Market Value of Convertible">
 </details for="(lv17) Est. Market Value of Straight Debt in Convertible">
 <details open id="value-of-debt-in-operating-leases"><summary><b>-----------------(lv17) Value of Debt in Operating Leases</b></summary>
 
@@ -654,44 +723,147 @@ To get this value, compute the `sum of PV(future lease commitments)`
 </details for="(lv17) Value of Debt in Operating Leases">
 </details for="(lv16) Market Value of Debt">
 </details for="(lv15) Levered Beta for Equity">
+
+<details open id="erp-used-in-coc"><summary><b>---------------(lv15) ERP used in COC (Equity Risk Premium used in Cost of Capital)</b></summary>
+
+```
+IF approach is "Will Input":
+    Manual input
+ELSE IF approach is "Country of Incorporation":
+    Lookup "Country of Incorporation" in the "Country equity risk premiums" sheet to get "Equity Risk Premium"
+ELSE IF approach is "Operating regions":
+    Get the "Total Weighted ERP" from the "Operating Regions ERP calculator" table
+ELSE:
+    Get the "Total Weighted ERP" from the "Operating Countries ERP calculator" table
+```
+
+To get the Total Weighted ERP, first calculate the weight of revenues from each country/region:
+
+```
+Weight = Revenues / Total Revenues
+```
+
+and then calculate the Weighted ERP for each country/region with the following formula:
+
+```
+Country/Region Weighted ERP = ERP for the country/region * Weight
+```
+
+The `sum(Country/Region Weighted ERP)` is the Total Weighted ERP.
+
+The ERP can be looked up from the "Country equity risk premiums" sheet or [Country Default Spreads and Risk Premiums](http://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ctryprem.html) page, column "Equity Risk Premium".
+
+#### Used In
+- [Cost of Equity](#cost-of-equity)
+
+</details for="(lv15) ERP used in COC">
 </details for="(lv14) Cost of Equity">
 
 <details open id="weight-of-debt-in-coc"><summary><b>--------------(lv14) Weight of Debt in COC</b></summary>
 
 ```
-Weight of Debt in COC = Market Value of Debt /
+Weight of Debt in COC = Market Value of Debt / Market Value of Capital Structure
 ```
 
 #### Used In
 - [Initial Cost of Capital](#initial-cost-of-capital)
 
+#### Components
+- [Market Value of Debt](#market-value-of-debt)
+- [Market Value of Capital Structure](#market-value-of-capital-structure)
+
 </details for="(lv14) Weight of Debt in COC">
 
 <details open id="cost-of-debt"><summary><b>--------------(lv14) Cost of Debt</b></summary>
 
+```
+Cost of Debt = Pre-tax Cost of Debt * (1 - Tax Rate)
+```
+
 #### Used In
 - [Initial Cost of Capital](#initial-cost-of-capital)
 
+#### Components
+- [Pre-tax Cost of Debt](#pre-tax-cost-of-debt)
+- [Tax Rate for COC calculation](#tax-rate-for-coc-calculation)
+
+<details open id="tax-rate-for-coc-calculation"><summary><b>---------------(lv15) Tax Rate for COC calculation</b></summary>
+
+This component is set to **Effective Tax Rate**.
+
+#### Used In
+- [Cost of Debt](#cost-of-debt)
+
+</details for="(lv15) Tax Rate for COC calculation">
 </details for="(lv14) Cost of Debt">
 
 <details open id="weight-of-preferred-stock-in-coc"><summary><b>--------------(lv14) Weight of Preferred Stock in COC</b></summary>
 
+```
+Weight of Preferred Stock in COC = Market Value of Preferred stock / Market Value of Capital Structure
+```
+
 #### Used In
 - [Initial Cost of Capital](#initial-cost-of-capital)
 
+#### Components
+- [Market Value of Preferred Stock](#market-value-of-preferred-stock)
+- [Market Value of Capital Structure](#market-value-of-capital-structure)
+
+<details open id="market-value-of-preferred-stock"><summary><b>---------------(lv15) Market Value of Preferred Stock</b></summary>
+
+```
+Market Value of Preferred Stock = Number of Preferred Shares * Current Market Price per Share
+```
+
+Find the Number of Preferred Shares and the Current Market Price per Share in the financial statements.
+
+#### Used In
+- [Weight of Preferred Stock in COC](#weight-of-preferred-stock-in-coc)
+
+</details for="(lv15) Market Value of Preferred Stock">
 </details for="(lv14) Weight of Preferred Stock in COC">
 
 <details open id="cost-of-preferred-stock"><summary><b>--------------(lv14) Cost of Preferred Stock</b></summary>
+
+```
+Cost of Preferred Stock = Annual Dividend per Preferred Share / Current Market Price per Preferred Share
+```
+
+Find the Annual Dividend per Preferred Share and Current Market Price per Preferred Share in the financial statements.
 
 #### Used In
 - [Initial Cost of Capital](#initial-cost-of-capital)
 
 </details for="(lv14) Cost of Preferred Stock">
 
-
 </details for="(lv13) Initial Cost of Capital">
 <details open id="terminal-cost-of-capital"><summary><b>-------------(lv13) Terminal Cost of Capital</b></summary>
 
+This is the Cost of Capital in the terminal year.
+
+The default assumption is the firm will eventually have a "Cost of Capital" similar to that of typical mature companies (Riskfree Rate + Mature Market ERP).
+
+Set the Terminal Cost of Capital to the result of the following function:
+```
+IF override fading risk levels:
+    Manual input
+ELSE:
+    IF override assumption that today's Riskfree Rate will prevail in perpetuity:
+        Manual input of Terminal Riskfree Rate + Mature Market ERP
+    ELSE:
+        Riskfree Rate + Mature Market ERP
+```
+
+To get the Mature Market ERP, find the "Total Equity Risk Premium" of United States from this page: [Country Default Spreads and Risk Premiums](http://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ctryprem.html).
+
+#### Used In
+- [Cost of Capital](#cost-of-capital)
+
+#### Components
+- [Riskfree Rate](#riskfree-rate)
+- Terminal Riskfree Rate
+- Mature Market Equity Risk Premium
 
 </details for="(lv13) Terminal Cost of Capital">
 </details for="(lv12) Cost of Capital">
@@ -744,14 +916,29 @@ ELSE:
 Cash Flow for each year is the present value of [FCFF](#fcff).
 
 #### Used In:
-- [(lv4) Sum of PV](#sum-of-pv)
+- [Sum of PV](#sum-of-pv)
 
-
-</details>
+</details for="(lv5) PV(CF over next 10 years)">
 </details for="(lv4) Sum of PV">
 </details for="(lv3) Value of operating assets">
-</details for="(lv2) Value of Equity">
-<details open><summary><b>(lv2) Value of Options"></b></summary>
 
-</details>
+<details open id="debt"><summary><b>---(lv3) Debt</b></summary>
+</details for="(lv3) Debt">
+
+<details open id="minority-interests"><summary><b>---(lv3) Minority Interests</b></summary>
+</details for="(lv3) Minority Interests">
+
+<details open id="cash"><summary><b>---(lv3) Cash</b></summary>
+</details for="(lv3) Cash">
+
+<details open id="cash-from-new-issue"><summary><b>---(lv3) Cash from new issue</b></summary>
+</details for="(lv3) Cash from new issue">
+
+<details open id="non-operating-assets"><summary><b>---(lv3) Non-operating Assets</b></summary>
+</details for="(lv3) Non-operating Assets">
+</details for="(lv2) Value of Equity">
+
+<details open id="value-of-options"><summary><b>--(lv2) Value of Options</b></summary>
+
+</details for="(lv2) Value of Options">
 </details for="(lv1) Value of Equity in Common Stock">
