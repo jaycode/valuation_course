@@ -3,7 +3,7 @@ Various code snippets for the Valuation Course by Prof. Aswath Damodaran ~ my fa
 
 ## Formulas
 
-These formulas are taken directly from this Excel spreadsheet: [Valuation of GameStop (January 28, 2021)](http://www.stern.nyu.edu/~adamodar/pc/blog/GameStop2021.xlsx)
+These formulas were taken directly from this Excel spreadsheet: [Valuation of GameStop (January 28, 2021)](http://www.stern.nyu.edu/~adamodar/pc/blog/GameStop2021.xlsx)
 
 <details open><summary><b>-(lv1) Value of Equity in Common Stock</b></summary>
 
@@ -13,13 +13,13 @@ This is the final value that we are looking for. Divided by the number of shares
 Value of Equity in Common Stock = Value of Equity - Value of Options
 ```
 
-<details open><summary><b>--(lv2) Value of Equity</b></summary>
+<details open id="value-of-equity"><summary><b>--(lv2) Value of Equity</b></summary>
 
 ```
 Value of Equity = Value of operating assets - Debt - Minority Interests + Cash + Cash from new issue + Non-operating assets
 ```
 
-#### References
+#### Components
 
 - [Value of operating assets](#value-of-operating-assets)
 
@@ -31,8 +31,10 @@ Value of operating assets = Sum of PV * (1 - Probability of failure) + Proceeds 
 
 Probability of failure is determined qualitatively.
 
-#### References
+#### Used In
+- [Value of Equity](#value-of-equity)
 
+#### Components
 - [Sum of PV](#sum-of-pv)
 
 <details open id="sum-of-pv"><summary><b>----(lv4) Sum of PV</b></summary>
@@ -41,13 +43,28 @@ Probability of failure is determined qualitatively.
 Sum of PV = PV(Terminal Value) + PV(CF over next 10 years)
 ```
 
-<details open><summary><b>-----(lv5) PV(Terminal Value)</b></summary>
+#### Used In
+- [Value of operating assets](#value-of-operating-assets)
+
+#### Components
+- [PV(Terminal Value)](#pv-terminal-value)
+- [PV(CF over next 10 years)](#pv-cf-over-next-10-years)
+
+
+<details open id="pv-terminal-value"><summary><b>-----(lv5) PV(Terminal Value)</b></summary>
 
 ```
 PV(Terminal Value) = Terminal Value * Cumulated Discount Factor
 ```
 
-<details open><summary><b>------(lv6) Terminal Value</b></summary>
+#### Used In
+- [Sum of PV](#sum-of-pv)
+
+#### Components
+- [Terminal Value](#terminal-value)
+- [Cumulated Discount Factor](#cumulated-discount-factor)
+
+<details open id="terminal-value"><summary><b>------(lv6) Terminal Value</b></summary>
 
 ```
 Terminal Value = Terminal Cash Flow / (Terminal Cost of Capital - Revenue Growth Rate)
@@ -55,27 +72,85 @@ Terminal Value = Terminal Cash Flow / (Terminal Cost of Capital - Revenue Growth
 
 Terminal Cash Flow is also known as **FCFF (Free Cash Flow to Firm) of the terminal year**.
 
-<details open><summary><b>-------(lv7) FCFF</b></summary>
+#### Used In
+- [PV(Terminal Value)](#pv-terminal-value)
+
+#### Components
+- [FCFF/Terminal Cash Flow](#fcff)
+
+<details open id="fcff"><summary><b>-------(lv7) FCFF</b></summary>
+
+For each year, including the terminal year, the formula of FCFF is:
 
 ```
 FCFF = After-tax EBIT - Reinvestment
 ```
 
-<details open><summary><b>--------(lv8) Tax Rate for EBIT calculation</b></summary>
+#### Used In
+- [Terminal Value](#terminal-value)
+- [PV(CF over next 10 years)](#pv-cf-over-next-10-years)
 
-In the spreadsheet, the tax rates for the first five years are constant, then increase/decrease linearly until the terminal year.
-To determine the tax rate for the terminal year, use the following conditional operator:
+#### Components
+- [After-tax EBIT](#after-tax-ebit)
+- [Reinvestment](#reinvestment)
 
-The first assumption is the effective tax rate will adjust to the result of this function:
+<details open id="after-tax-ebit"><summary><b>--------(lv8) After-tax EBIT (Earnings before Interest and Taxes)</b></summary>
+
+There are three flavors of After-tax EBIT:
+
+**After-tax EBIT for the first year**
+This measure is calculated with the following function:
+
 ```
-IF assume the effective tax rate will adjust to the marginal tax rate in the terminal year?
-    use Marginal Tax Rate
+IF EBIT > 0:
+    EBIT * (1 - Tax Rate for EBIT calculation)
 ELSE:
-    use Effective Tax Rate
+    0
 ```
 
-</details for="(lv8) Tax Rate for EBIT calculation">
-<details open><summary><b>--------(lv8) EBIT</b></summary>
+**After-tax EBIT for the last year**
+We assume the terminal year would definitely have a positive EBIT, so the After-Tax EBIT is calculated with this function:
+
+```
+After-tax EBIT = EBIT * (1 - Tax Rate for EBIT calculation)
+```
+
+**After-tax EBIT for the next year until the terminal year**
+This measure is calculated with the following function:
+
+```
+IF EBIT > 0:
+    IF EBIT < NOL in the previous year:
+        EBIT
+    ELSE:
+        EBIT - (EBIT - NOL in the previous year) * Tax Rate for EBIT calculation
+ELSE:
+    EBIT
+```
+
+Basically, this function reduces the amount used for tax calculation with the Net Operating Losses from the previous year.
+
+The latest regulation seems to limit this amount to 80% of the EBIT, so the alternative formula would be something like:
+
+```
+IF EBIT > 0:
+    IF EBIT < NOL in the previous year * 80%:
+        EBIT - (EBIT * 80% * Tax Rate for EBIT calculation)
+    ELSE:
+        EBIT - (EBIT - NOL in the previous year * 80%) * Tax Rate for EBIT calculation
+ELSE:
+    EBIT
+```
+
+#### Used In
+- [FCFF](#fcff)
+
+#### Components
+- [EBIT](#ebit)
+- [NOL](#nol)
+- [Tax Rate for EBIT calculation](#tax-rate-for-ebit-calculation)
+
+<details open id="ebit"><summary><b>---------(lv9) EBIT</b></summary>
 
 EBIT for the first year is calculated with this function:
 
@@ -102,16 +177,22 @@ For subsequent years until the terminal year, use the following formula:
 EBIT = EBIT margin * Revenues
 ```
 
-EBIT margin is decided qualitatively. From the look of it, it is unique to each company.
+#### Used In
+- [After-tax EBIT](#after-tax-ebit)
 
-Here are the factors used in the GameStop spreadsheet:
+#### Components
+- [EBIT margin](#ebit-margin)
+- [Revenues](#revenues)
+
+<details open id="ebit-margin"><summary><b>----------(lv10) EBIT margin</b></summary>
+EBIT margin is decided qualitatively. It is unique to each company.
+
+Here are the factors Used In the GameStop spreadsheet:
 
 1. Revenue growth rate for next year.
    This one is purely qualitative.
 2. Target Pre=tax operating margin
-   This is the EBIT as % of sales in year 10. To get this number, look at
-   the company's current pre-tax operating margin and the average for the
-   industry.
+   This is the EBIT as % of sales in year 10. To get this number, look at the company's current pre-tax operating margin and the average for the industry.
 3. Year of convergence
    The year in which the current margin will converge on target.
 
@@ -124,46 +205,168 @@ ELSE:
 ```
 
 In other words, simply grow linearly between year 2 and the terminal year, capped at "Target pre-tax operating margin".
-<details open><summary><b>---------(lv9) Revenues</b></summary>
+
+#### Used In
+- [EBIT](#ebit)
+
+</details for="(lv10) EBIT margin">
+<details open id="revenues"><summary><b>----------(lv10) Revenues</b></summary>
 
 ```
 this year's Revenue = previous year's Revenue * (1 + Revenue growth rate)
 ```
 
+#### Used In
+- [EBIT](#ebit)
+- [Pre-terminal Reinvestment](#pre-terminal-reinvestment)
+
+#### Components
+- [Revenue growth rate](#revenue-growth-rate)
+
+<details open id="revenue-growth-rate"><summary><b>-----------(lv11) Revenue growth rate</b></summary>
+
 Just like EBIT margin growth, the Revenue growth rates are decided qualitatively throughout the years.
 
 In the GameStop's case, it was set at a constant 2% from year 2 all the way through the terminal year. In the case Amazon in the 2000's, it started at 150% and grow half each year down to a stable growth value of 6% in the terminal year.
-</details for="Revenues">
-</details for="EBIT">
-<details open><summary><b>--------(lv8) Reinvestment</b></summary>
 
-Start by determining the Reinvestment for the terminal year with the following function:
+#### Used In
+- [Revenues](#revenues)
+- [Terminal Reinvestment](#terminal-reinvestment)
 
+</details for="(lv11) Revenue growth rate">
+</details for="(lv10) Revenues">
+</details for="(lv9) EBIT">
+<details open id="nol"><summary><b>---------(lv9) NOL (Net Operating Losses)</b></summary>
+The company may have Net Operating Losses from prior years that may be used to reduce tax calculations for the subsequent years.
+
+#### Used In
+- [After-tax EBIT](#after-tax-ebit)
+
+</details for="(lv9) NOL">
+<details open id="tax-rate-for-ebit-calculation"><summary><b>---------(lv9) Tax Rate for EBIT calculation</b></summary>
+
+In the spreadsheet, the tax rates for the first five years are constant, set to the **Effective Tax Rate**, and then increase/decrease linearly until the terminal year.
+To determine the tax rate for the terminal year, use the following conditional operator:
+
+The first assumption is the effective tax rate will adjust to the result of this function:
 ```
-IF Revenue growth rate > 0:
-    (Revenue growth rate / ROIC of the terminal year) * After-tax EBIT
+IF assume the effective tax rate will adjust to the marginal tax rate in the terminal year?
+    use Marginal Tax Rate
+ELSE:
+    use Effective Tax Rate
+```
+
+#### Used In
+- [EBIT](#ebit)
+
+</details for="(lv9) Tax Rate for EBIT calculation">
+</details for="(lv8) After-tax EBIT">
+
+<details open id="reinvestment"><summary><b>--------(lv8) Reinvestment</b></summary>
+
+Reinvestments are calculated differently for the terminal year and pre-terminal years. For our purposes, Reinvestment in the terminal year is called **Terminal Reinvestment** and before it **Pre-terminal Reinvestment**.
+
+#### Used In
+- [FCFF](#fcff)
+
+#### Details
+- [Pre-terminal Reinvestment](#pre-terminal-reinvestment)
+- [Terminal Reinvestment](#terminal-reinvestment)
+
+<details open id="pre-terminal-reinvestment"><summary><b>---------(lv9) Pre-terminal Reinvestment</b></summary>
+
+Reinvestment for subsequent years after the base year (but before the terminal year) is the result of the following function:
+```
+IF this year's Revenue > previous year's Revenue:
+    (this year's Revenue - previous year's Revenue) / Sales to Capital Ratio
 ELSE:
     0
 ```
 
-<details open><summary><b>---------(lv9) ROIC</b></summary>
+#### Used In
+- [Reinvestment](#reinvestment)
+- [FCFF](#fcff)
+
+#### Components
+- [Revenues](#revenues)
+- [Sales to Capital Ratio](#sales-to-capital-ratio)
+
+<details open id="sales-to-capital-ratio"><summary><b>----------(lv10) Sales to Capital Ratio</b></summary>
+
+A ratio that tells us how efficient the company converts their capital to sales. Look at the industry averages in the worksheet or consult this page: [Capital Expenditures by Sector (US)](http://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/capex.html)
+
+#### Used In
+- [Pre-terminal Reinvestment](pre-terminal-reinvestment)
+
+</details for="(lv10) Sales to Capital Ratio">
+</details for="(lv9) Pre-terminal Reinvestment">
+<details open id="terminal-reinvestment"><summary><b>---------(lv9) Terminal Reinvestment</b></summary>
+
+Reinvestment in the terminal year is determined with the following function:
+
+```
+IF Revenue growth rate in the terminal year > 0:
+    (Revenue growth rate in the terminal year / ROIC in the terminal year) * After-tax EBIT
+ELSE:
+    0
+```
+
+#### Used In
+- [Reinvestment](#reinvestment)
+- [FCFF](#fcff)
+
+#### Components
+- [Revenue growth rate](#revenue-growth-rate) in the terminal year
+- [Terminal ROIC](#terminal-roic)
+
+<details open id="roic"><summary><b>----------(lv10) ROIC (Return on Invested Capital)</b></summary>
+
+The ROICs are calculated and treated differently before and in the terminal year.
+
+Terminal ROIC is determined first, and then calculate other parts of the DCF valuation. Earlier years' ROICs are then calculated after the Invested Capital and After-tax EBIT are calculated.
+
+#### Used In
+- [Terminal Reinvestment](terminal-reinvestment)
+
+#### Details
+- [Terminal ROIC](#terminal-roic)
+- [Pre-terminal ROIC](#pre-terminal-roic)
+
+<details open id="terminal-roic"><summary><b>-----------(lv11) Terminal ROIC</b></summary>
 
 Start by determining the ROIC for the terminal year with the following function:
 
 The basic assumption is the firm will earn a "Return on Capital" equal to its "Cost of Capital" at maturity. This assumes that whatever competitive advantages the company has today will fade over time.
 ```
-=IF('Input sheet'!B46="Yes",'Input sheet'!B47,'Valuation output'!L12)
+IF('Input sheet'!B46="Yes",'Input sheet'!B47,'Valuation output'!L12)
 IF override fading competitive advantages assumption:
     use Expected ROIC at Maturity
 ELSE:
     use Cost of Capital at the year before the terminal year
 ```
 
-<details open><summary><b>----------(lv10) Cost of Capital</b></summary>
+#### Used In
+- [Terminal Reinvestment](terminal-reinvestment)
+- [ROIC (Return on Invested Capital)](#roic)
 
-Control the year 1 and terminal year Cost of Capital. year 1's Cost of Capital is also called the "Initial Cost of Capital"
+#### Components
+- [Cost of Capital](#cost-of-capital)
 
-<details open><summary><b>-----------(lv11) Initial Cost of Capital</b></summary>
+<details open id="cost-of-capital"><summary><b>------------(lv12) Cost of Capital (COC)</b></summary>
+
+Control the year 1 and terminal year Cost of Capital. For the years between year 1 and the terminal year, qualitatively determine the growth function.
+
+- Year 1's Cost of Capital is called **Initial Cost of Capital**.
+- Cost of Capital in the terminal year is called **Terminal Cost of Capital**
+
+#### Used In
+- [ROIC](#roic)
+
+#### Components
+- [Initial Cost of Capital](#initial-cost-of-capital)
+- [Terminal Cost of Capital](#terminal-cost-of-capital)
+
+<details open id="initial-cost-of-capital"><summary><b>-------------(lv13) Initial Cost of Capital</b></summary>
 
 Either enter as a setting or use the "Cost of capital worksheet" to determine its value.
 
@@ -173,36 +376,91 @@ In the "Cost of capital worksheet", the formula for the Cost of Capital is as fo
 Cost of Capital (COC) = Weight of Equity in COC * Cost of Equity + Weight of Debt in COC * Cost of Debt + Weight of Preferred Stock in COC * Cost of Preferred Stock
 ```
 
-<details open><summary><b>------------(lv12) Weight of Equity in COC</b></summary>
+#### Used In
+- [Cost of Capital](#cost-of-capital)
+
+#### Components
+- [Weight of Equity in COC](#weight-of-equity-in-coc)
+- [Cost of Equity](#cost-of-equity)
+- [Weight of Debt in COC](#weight-of-debt-in-coc)
+- [Cost of Debt](#cost-of-debt)
+- [Weight of Preferred Stock in COC](#weight-of-preferred-stock-in-coc)
+- [Cost of Preferred Stock](#cost-of-preferred-stock)
+
+<details open id="weight-of-equity-in-coc"><summary><b>--------------(lv14) Weight of Equity in COC</b></summary>
 
 ```
-Weight of Equity in COC = Market Value of Equity
+Weight of Equity in COC = Market Value of Equity / Market Value of Capital Structure
 ```
 
-<details open id="market-value-of-equity"><summary><b>-------------(lv13) Market Value of Equity</b></summary>
+#### Used In
+- [Initial Cost of Capital](#initial-cost-of-capital)
+
+#### Components
+- [Market Value of Equity](#market-value-of-equity)
+- [Market Value of Capital Structure](#market-value-of-capital-structure)
+
+<details open id="market-value-of-equity"><summary><b>---------------(lv15) Market Value of Equity</b></summary>
 Market Value of Equity is just the Market Cap, that is,
 
 ```
 Market Value of Equity = Number of Shares Outstanding * Current Market Price per Share
 ```
-</details for="(lv13) Market Value of Equity">
 
-</details for="(lv12) Weight of Equity in COC">
+#### Used In
+- [Weight of Equity in COC](#weight-of-equity-in-coc)
+- [Market Value of Capital Structure](#market-value-of-capital-structure)
 
-<details open><summary><b>------------(lv12) Cost of Equity</b></summary>
+
+</details for="(lv15) Market Value of Equity">
+
+<details open id="market-value-of-capital-structure"><summary><b>---------------(lv15) Market Value of Capital Structure</b></summary>
+
+This measure is composed of the total market cap and liabilities of a company.
 
 ```
-Cost of Equity = Riskfree Rate + Levered Beta for Equity * Equity Risk Premium used in Cost of Equity
+Market Value of Capital Structure = Market Value of Equity + Market Value of Debt + Market Value of Preferred Stock
 ```
 
-<details open><summary><b>-------------(lv13) Riskfree Rate</b></summary>
+#### Used In
+- [Weight of Equity in COC](#weight-of-equity-in-coc)
+- [Weight of Debt in COC](#weight-of-debt-in-coc)
+- [Weight of Preferred Stock in COC](#weight-of-preferred-stock-in-coc)
+
+#### Components
+- [Market Value of Equity](#market-value-of-equity)
+- [Market Value of Debt](#market-value-of-debt)
+- [Market Value of Preferred Stock](#market-value-of-preferred-stock)
+
+</details>
+
+</details for="(lv14) Weight of Equity in COC">
+
+<details open id="cost-of-equity"><summary><b>--------------(lv14) Cost of Equity (COE)</b></summary>
+
+```
+Cost of Equity = Riskfree Rate + Levered Beta for Equity * Equity Risk Premium
+```
+
+#### Used In
+- [Initial Cost of Capital](#initial-cost-of-capital)
+
+#### Components
+- [Riskfree Rate](#riskfree-rate)
+- [Levered Beta for Equity](#levered-beta-for-equity)
+- [Equity Risk Premium](#equity-risk-premium)
+
+<details open id="riskfree-rate"><summary><b>---------------(lv15) Riskfree Rate</b></summary>
 This should be today's long term riskfree rate. If you are working with a currency where the government has default risk, clean up the government bond rate to make it riskfree (by subtracting the default spread for the government).
-</details for="(lv13) Riskfree Rate">
 
+#### Used In
+- [Cost of Equity](#cost-of-equity)
 
-<details open id="levered-beta-for-equity"><summary><b>-------------(lv13) Levered Beta for Equity</b></summary>
+</details for="(lv15) Riskfree Rate">
 
-Levered beta for equity is the beta used in the Cost of Equity calculation.
+<details open id="levered-beta-for-equity"><summary><b>---------------(lv15) Levered Beta for Equity</b></summary>
+
+Levered beta for equity is the beta Used In the Cost of Equity calculation.
 
 If not direct input, use the unlevered beta calculated above for the levered beta calculation.
 
@@ -213,32 +471,50 @@ ELSE:
     Unlevered Beta * (1+(1-Tax Rate)*(Market Value of Debt / Market Value of Equity)))
 ```
 
-#### References
+#### Used In
+- [Cost of Equity](#cost-of-equity)
+- [Pre-tax Cost of Debt](#pre-tax-cost-of-debt)
+- ["Estimated Cost of Debt" in the "Synthetic Rating" sheet](#estimated-cost-of-debt-in-the-synthetic-rating-sheet)
 
+#### Components
 - [Unlevered Beta](#unlevered-beta)
 - [Market Value of Debt](#market-value-of-debt)
 - [Market Value of Equity](#market-value-of-equity)
 
-<details open id="unlevered-beta"><summary><b>--------------(lv14) Unlevered Beta</b></summary>
+<details open id="unlevered-beta"><summary><b>----------------(lv16) Unlevered Beta</b></summary>
 
 ```
 IF "Single Business(US)":
     Lookup "Unlevered Beta" from the "Industry Average Beta (US)" sheet
 ELSE IF "Multibusiness(US)":
-    Perform Unlevered Beta calculation with the "Multi Business (US Industry Averages)" table
+    Get the weighted average of Unlevered Beta in the "Multi Business (US Industry Averages)" table
 ELSE IF "Single Business(Global)":
     Lookup "Unlevered Beta" from the "Industry Average Beta (Global)" sheet
 ELSE:
-    Perform Unlevered Beta calculation with the "Multi Business (Global Industry Averages)" table
+    Get the weighted average of Unlevered Beta in the "Multi Business (Global Industry Averages)" table
 ```
 
-#### References
+To get the weighted average, first calculate the **Estimated Value** for each business by its **Revenues**:
 
-- [top](#levered-beta-for-equity)
+```
+Estimated Value for a business = Revenues for that business * EV/Sales for that Business
+```
 
-</details for="(lv14) Unlevered Beta">
+And then,
 
-<details open id="market-value-of-debt"><summary><b>--------------(lv14) Market Value of Debt</b></summary>
+```
+Weighted Average of Unlevered Beta = Sum(Unlevered Beta for a business * Estimated Values for that business / sum of Estimated Values for all businesses)
+```
+
+The EV/Sales can be looked up from the "Industry Average Beta (US/Global)" sheets.
+
+
+#### Used In
+- [Levered Beta for Equity](#levered-beta-for-equity)
+
+</details for="(lv16) Unlevered Beta">
+
+<details open id="market-value-of-debt"><summary><b>----------------(lv16) Market Value of Debt</b></summary>
 
 This is not a commonly available information. Here is how to estimate Market Value of Debt in the above formula:
 
@@ -246,11 +522,16 @@ This is not a commonly available information. Here is how to estimate Market Val
 Est. Market Value of Debt = Est. Market Value of Straight Debt + Est. Market Value of Straight Debt in Convertible + Value of Debt in Operating Leases
 ```
 
-#### References
+#### Used In
+- [Levered Beta for Equity](#levered-beta-for-equity)
+- [Market Value of Capital Structure](#market-value-of-capital-structure)
 
-- [top](#levered-beta-for-equity)
+#### Components
+- [Est. Market Value of Straight Debt](#est-market-value-of-straight-debt)
+- [Est. Market Value of Straight Debt in Convertible](#est-market-value-of-straight-debt-in-convertible)
+- [Value of Debt in Operating Leases](#value-of-debt-in-operating-leases)
 
-<details open id="est.-market-value-of-straight-debt"><summary><b>---------------(lv15) Est. Market Value of Straight Debt</b></summary>
+<details open id="est-market-value-of-straight-debt"><summary><b>-----------------(lv17) Est. Market Value of Straight Debt</b></summary>
 
 ```
 Est. Market Value of Straight Debt =
@@ -261,11 +542,13 @@ Interest Expense * (1 - (1 + Pre-tax Cost of Debt) ** (-Average Maturity)) / Int
 - Average Maturity is generally found in the footnotes of financial statements.
 - Book Value of Straight Debt is also commonly known as "Total Debt" in the Balance Sheet (at least in Yahoo Finance).
 
-#### References
+#### Used In
+- [Market Value of Debt](#market-value-of-debt)
 
-- [top](#market-value-of-debt)
+#### Components
+- [Pre-tax Cost of Debt](#pre-tax-cost-of-debt)
 
-<details open id="pre-tax-cost-of-debt"><summary><b>----------------(lv16) Pre-tax Cost of Debt</b></summary>
+<details open id="pre-tax-cost-of-debt"><summary><b>------------------(lv18) Pre-tax Cost of Debt</b></summary>
 
 ```
 IF "Direct Input":
@@ -277,23 +560,28 @@ ELSE ("Actual Rating"):
     Pre-tax Cost of Debt = Risk-free Rate + Rating Spread
 ```
 
-#### References
+#### Used In
+- [Est. Market Value of Straight Debt](#est-market-value-of-straight-debt)
 
-- [top](#est.-market-value-of-straight-debt)
+#### Components
+- ["Estimated Cost of Debt" in the "Synthetic Rating" sheet](#estimated-cost-of-debt-in-the-synthetic-rating-sheet)
+- [Riskfree Rate](#riskfree-rate)
 
-<details open id="estimated-cost-of-debt-in-the-synthetic-rating-sheet"><summary><b>-----------------(lv17) "Estimated Cost of Debt" in the "Synthetic Rating" sheet</b></summary>
+<details open id="estimated-cost-of-debt-in-the-synthetic-rating-sheet"><summary><b>-------------------(lv19) "Estimated Cost of Debt" in the "Synthetic Rating" sheet</b></summary>
 
 ```
   Estimated Cost of Debt = Risk-free Rate + Estimated Company Default Spread + Estimated Country Default Spread (if any)
 ```
 
-#### References
+#### Used In
+- [Pre-tax Cost of Debt](#pre-tax-cost-of-debt)
 
-- [top](#pre-tax-cost-of-debt)
+#### Components
+- [Riskfree Rate](#riskfree-rate)
 - [Estimated Company Default Spread](#estimated-company-default-spread)
 - [Estimated Country Default Spread (if any)](#estimated-country-default-spread-if-any)
 
-<details open id="estimated-company-default-spread"><summary><b>------------------(lv18) Estimated Company Default Spread</b></summary>
+<details open id="estimated-company-default-spread"><summary><b>--------------------(lv20) Estimated Company Default Spread</b></summary>
 
 The formula depends on whether the company has a large market cap (> \\$5billion) or small market cap (< \\$5billion or volatile earnings or is in risky business)
 
@@ -306,33 +594,41 @@ ELSE:
     (there is a missing reference in the spreadsheet)
 ```
 
-#### References
+#### Used In
+- ["Estimated Cost of Debt" in the "Synthetic Rating" sheet](#estimated-cost-of-debt-in-the-synthetic-rating-sheet)
 
-- [top](#estimated-cost-of-debt-in-the-synthetic-rating-sheet)
-
-</details for="(lv18) Estimated Company Default Spread">
-<details open id="estimated-country-default-spread-if-any"><summary><b>------------------(lv18) Estimated Country Default Spread (if any)</b></summary>
+</details for="(lv20) Estimated Company Default Spread">
+<details open id="estimated-country-default-spread-if-any"><summary><b>--------------------(lv20) Estimated Country Default Spread (if any)</b></summary>
 
 Lookup the country the company is incorporated in in the Country equity risk premiums sheet to get Adjusted Default Spread.
 
-#### References
+#### Used In
+- ["Estimated Cost of Debt" in the "Synthetic Rating" sheet](#estimated-cost-of-debt-in-the-synthetic-rating-sheet)
 
-- [top](#estimated-cost-of-debt-in-the-synthetic-rating-sheet)
-
-</details for="(lv18) Estimated Country Default Spread (if any)">
-</details for="(lv17) \"Estimated Cost of Debt" in the \"Synthetic Rating\" sheet">
-</details for="(lv16) Pre-tax Cost of Debt">
-</details for="(lv15) Est. Market Value of Straight Debt">
-<details open id="est.-market-value-of-straight-debt-in-convertible"><summary><b>---------------(lv15) Est. Market Value of Straight Debt in Convertible</b></summary>
+</details for="(lv20) Estimated Country Default Spread (if any)">
+</details for="(lv19) \"Estimated Cost of Debt" in the \"Synthetic Rating\" sheet">
+</details for="(lv18) Pre-tax Cost of Debt">
+</details for="(lv17) Est. Market Value of Straight Debt">
+<details open id="est-market-value-of-straight-debt-in-convertible"><summary><b>-----------------(lv17) Est. Market Value of Straight Debt in Convertible</b></summary>
 
 ```
 Est. Market Value of Straight Debt in Convertible =
-Interest Expense on Convertible * (1 - (1 + Pre-Tax Cost of Debt) ** (-Maturity of Convertible Bond)) / Pre-Tax Cost of Debt
-+ Book Value of Convertible Debt / (1 + Pre-Tax Cost Of Debt) ** Market Value of Convertible
+Interest Expense on Convertible * (1 - (1 + Pre-tax Cost of Debt) ** (-Maturity of Convertible Bond)) / Pre-tax Cost of Debt
++ Book Value of Convertible Debt / (1 + Pre-tax Cost Of Debt) ** Market Value of Convertible
 ```
 
-</details for="(lv15) Est. Market Value of Straight Debt in Convertible">
-<details open id="value-of-debt-in-operating-leases"><summary><b>---------------(lv15) Value of Debt in Operating Leases</b></summary>
+#### Used In
+- [Market Value of Debt](#market-value-of-debt)
+
+#### Components
+- [Interest Expense on Convertible](#interest-expense-on-convertible)
+- [Pre-tax Cost of Debt](#pre-tax-cost-of-debt)
+- [Maturity of Convertible Bond](#maturity-of-convertible-bond)
+- [Book Value of Convertible Debt](#book-value-of-convertible-debt)
+- [Market Value of Convertible](#market-value-of-convertible)
+
+</details for="(lv17) Est. Market Value of Straight Debt in Convertible">
+<details open id="value-of-debt-in-operating-leases"><summary><b>-----------------(lv17) Value of Debt in Operating Leases</b></summary>
 
 ```
 IF Have operating lease commitments:
@@ -341,17 +637,66 @@ ELSE:
     0
 ```
 
-<details open><summary><b>----------------(lv16) Adjustment to Total Debt Outstanding</b></summary>
+#### Used In
+- [Market Value of Debt](#market-value-of-debt)
+
+#### Components
+- [Adjustment to Total Debt Outstanding](#adjustment-to-total-debt-outstanding)
+
+<details open id="adjustment-to-total-debt-outstanding"><summary><b>------------------(lv18) Adjustment to Total Debt Outstanding</b></summary>
 
 To get this value, compute the `sum of PV(future lease commitments)`
 
-</details for="(lv16) Adjustment to Total Debt Outstanding">
-</details for="(lv15) Value of Debt in Operating Leases">
-</details for="(lv14) Market Value of Debt">
-</details for="(lv13) Levered Beta for Equity">
-</details for="(lv12) Cost of Equity">
-</details for="(lv11) Initial Cost of Capital">
-</details for="(lv10) Cost of Capital">
+#### Used In
+- [Value of Debt in Operating Leases](#value-of-debt-in-operating-leases)
+
+</details for="(lv18) Adjustment to Total Debt Outstanding">
+</details for="(lv17) Value of Debt in Operating Leases">
+</details for="(lv16) Market Value of Debt">
+</details for="(lv15) Levered Beta for Equity">
+</details for="(lv14) Cost of Equity">
+
+<details open id="weight-of-debt-in-coc"><summary><b>--------------(lv14) Weight of Debt in COC</b></summary>
+
+```
+Weight of Debt in COC = Market Value of Debt /
+```
+
+#### Used In
+- [Initial Cost of Capital](#initial-cost-of-capital)
+
+</details for="(lv14) Weight of Debt in COC">
+
+<details open id="cost-of-debt"><summary><b>--------------(lv14) Cost of Debt</b></summary>
+
+#### Used In
+- [Initial Cost of Capital](#initial-cost-of-capital)
+
+</details for="(lv14) Cost of Debt">
+
+<details open id="weight-of-preferred-stock-in-coc"><summary><b>--------------(lv14) Weight of Preferred Stock in COC</b></summary>
+
+#### Used In
+- [Initial Cost of Capital](#initial-cost-of-capital)
+
+</details for="(lv14) Weight of Preferred Stock in COC">
+
+<details open id="cost-of-preferred-stock"><summary><b>--------------(lv14) Cost of Preferred Stock</b></summary>
+
+#### Used In
+- [Initial Cost of Capital](#initial-cost-of-capital)
+
+</details for="(lv14) Cost of Preferred Stock">
+
+
+</details for="(lv13) Initial Cost of Capital">
+<details open id="terminal-cost-of-capital"><summary><b>-------------(lv13) Terminal Cost of Capital</b></summary>
+
+
+</details for="(lv13) Terminal Cost of Capital">
+</details for="(lv12) Cost of Capital">
+</details for="(lv11) Terminal ROIC">
+<details open id="pre-terminal-roic"><summary><b>-----------(lv11) Pre-terminal ROIC</b></summary>
 
 ROIC for each year before the terminal year is calculated with the following formula:
 
@@ -359,7 +704,7 @@ ROIC for each year before the terminal year is calculated with the following for
 this year's ROIC = this year's After-tax EBIT / Invested Capital
 ```
 
-<details open id="invested-capital"><summary><b>----------(lv10) Invested Capital</b></summary>
+<details open id="invested-capital"><summary><b>------------(lv12) Invested Capital</b></summary>
 
 ```
 IF Have lease commitments:
@@ -386,27 +731,24 @@ ELSE:
         - Cash and Marketable Securities
 ```
 
-</details for="(lv10) Invested Capital">
-</details for="(lv9) ROIC">
-
-Reinvestment for each year after the base year is the result of the following function:
-```
-IF this year's Revenue > previous year's Revenue:
-    (this year's Revenue - previous year's Revenue) / Sales to Capital Ratio
-ELSE:
-    0
-```
-
-<details open><summary><b>---------(lv9) Sales to Capital Ratio</b></summary>
-
-A ratio that tells us how efficient the company converts their capital to sales. Look at the industry averages in the worksheet or consult this page: [Capital Expenditures by Sector (US)](http://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/capex.html)
-
-</details for="(lv9) Sales to Capital Ratio">
+</details for="(lv12) Invested Capital">
+</details for="(lv11) Pre-terminal ROIC">
+</details for="(lv10) ROIC">
+</details for="(lv9) Terminal Reinvestment">
 </details for="(lv8) Reinvestment">
 </details for="(lv7) FCFF">
 </details for="(lv6) Terminal Value">
 </details for="(lv5) PV(Terminal Value)">
-</details for="(lv4) PV(Terminal Value)">
+<details open id="pv-cf-over-next-10-years"><summary><b>-----(lv5) PV(CF over next 10 years)</b></summary>
+
+Cash Flow for each year is the present value of [FCFF](#fcff).
+
+#### Used In:
+- [(lv4) Sum of PV](#sum-of-pv)
+
+
+</details>
+</details for="(lv4) Sum of PV">
 </details for="(lv3) Value of operating assets">
 </details for="(lv2) Value of Equity">
 <details open><summary><b>(lv2) Value of Options"></b></summary>
