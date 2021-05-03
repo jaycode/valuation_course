@@ -1,5 +1,5 @@
 # valuation_course
-Various code snippets for the Valuation Course by Prof. Aswath Damodaran ~ my favorite person in finance.
+Various code snippets for the Valuation Course by Prof. Aswath Damodaran.
 
 ## Cheatsheet
 These functions and formulas were taken directly from this Excel spreadsheet: [Valuation of GameStop (January 28, 2021)](http://www.stern.nyu.edu/~adamodar/pc/blog/GameStop2021.xlsx)
@@ -28,7 +28,7 @@ Value of Equity in Common Stock = Value of Equity - Value of Options
 <details open id="value-of-equity"><summary><b>--(lv2) Value of Equity</b></summary>
 
 ```
-Value of Equity = Value of operating assets - Debt - Minority Interests + Cash + Cash from new issue + Non-operating Assets
+Value of Equity = Value of operating assets - Debt - Minority Interests + Cash + Cash from new issue + Cross holdings and other Non-operating Assets
 ```
 
 #### Used In
@@ -41,7 +41,7 @@ Value of Equity = Value of operating assets - Debt - Minority Interests + Cash +
 - [Minority Interests](#minority-interests)
 - [Cash](#cash)
 - [Cash from new issue](#cash-from-new-issue)
-- [Non-operating Assets](#non-operating-assets)
+- [Cross holdings and other Non-operating Assets](#cross-holdings-and-other-non-operating-assets)
 
 <details open id="value-of-operating-assets"><summary><b>---(lv3) Value of operating assets</b></summary>
 
@@ -710,16 +710,16 @@ ELSE:
 - [Market Value of Debt](#market-value-of-debt)
 
 #### Components
-- [Adjustment to Total Debt Outstanding](#adjustment-to-total-debt-outstanding)
+- [Adjustment to Total Debt Outstanding from leases](#adjustment-to-total-debt-outstanding-from-leases)
 
-<details open id="adjustment-to-total-debt-outstanding"><summary><b>------------------(lv18) Adjustment to Total Debt Outstanding</b></summary>
+<details open id="adjustment-to-total-debt-outstanding-from-leases"><summary><b>------------------(lv18) Adjustment to Total Debt Outstanding from leases</b></summary>
 
 To get this value, compute the `sum of PV(future lease commitments)`
 
 #### Used In
 - [Value of Debt in Operating Leases](#value-of-debt-in-operating-leases)
 
-</details for="(lv18) Adjustment to Total Debt Outstanding">
+</details for="(lv18) Adjustment to Total Debt Outstanding from leases">
 </details for="(lv17) Value of Debt in Operating Leases">
 </details for="(lv16) Market Value of Debt">
 </details for="(lv15) Levered Beta for Equity">
@@ -923,22 +923,254 @@ Cash Flow for each year is the present value of [FCFF](#fcff).
 </details for="(lv3) Value of operating assets">
 
 <details open id="debt"><summary><b>---(lv3) Debt</b></summary>
+
+```
+IF Have operating lease commitments:
+    Book Value of Debt + "Adjustment to Total Debt Outstanding" in the "Operating Lease Converter" sheet
+ELSE:
+    Book Value of Debt
+```
+
+Book Value of Debt is also called Total Debt in the balance sheet.
+
+#### Used In
+- [Value of Equity](#value-of-equity)
+
+#### Componenets
+
+- [Adjustment to Total Debt Outstanding from leases](#adjustment-to-total-debt-outstanding-from-leases)
+
 </details for="(lv3) Debt">
 
 <details open id="minority-interests"><summary><b>---(lv3) Minority Interests</b></summary>
+
+The "market" value of minority interests. This is a uniquely accounting item and will be on the liability side of your company's balance sheet.
+
+It reflects the requirement that if you own more than 50% of another company or have effective control of it, you have to consolidate that company's statements with yours. Thus, you count 100% of that subsidiaries assets, revenues and operating income with your company, even if you own only 60%. The minority interest reflects the book value of the 40% of the equity in the subsidiary that does not belong to you.
+
+**It is best if you can convert the book value to a market value by applying the price to book ratio for the sector in which the subsidiary operates.**
+
+#### Used In
+- [Value of Equity](#value-of-equity)
+
 </details for="(lv3) Minority Interests">
 
 <details open id="cash"><summary><b>---(lv3) Cash</b></summary>
+
+
+```
+IF override the assumption that none of the cash is trapped in foreign currencies and there is no additional tax liability coming due and that cash is a neutral asset:
+    Cash and Marketable Securities - Enter trapped cash (if taxes) or entire balance (if mistrust) * (Marginal Tax Rate - Average Tax Rate of the foreign markets where the cash is trapped)
+ELSE:
+    Cash and Marketable Securities
+```
+
+**Enter trapped cash (if taxes) or entire balance (if mistrust)**
+If your concern is that a portion of the cash is trapped in foreign markets and will be subject to tax, when returned, enter the trapped cash balance. If you feel that the entire cash balance is being discounted because markets don't trust managers, enter the entire cash balance.
+
+**Average Tax Rate of the foreign markets where the cash is trapped**
+This is the additional tax due, if the cash is trapped cash. If your concern is that all cash is being discounted by the market because of management mistrust, enter the percentage discount to apply to cash.
+
+#### Used In
+- [Value of Equity](#value-of-equity)
+
+#### Components
+- Cash and Marketable Securities
+- Trapped cash (if taxes) or entire balance (if mistrust)
+- Marginal Tax rate
+- Average Tax Rate of the foreign markets where the cash is trapped
+
 </details for="(lv3) Cash">
 
 <details open id="cash-from-new-issue"><summary><b>---(lv3) Cash from new issue</b></summary>
+
+#### Used In
+- [Value of Equity](#value-of-equity)
+
 </details for="(lv3) Cash from new issue">
 
-<details open id="non-operating-assets"><summary><b>---(lv3) Non-operating Assets</b></summary>
-</details for="(lv3) Non-operating Assets">
+<details open id="cross-holdings-and-other-non-operating-assets"><summary><b>---(lv3) Cross holdings and other Non-operating Assets</b></summary>
+
+Enter the market value of those non-cash assets whose earnings are (and will never) show up as part of operating income.
+
+The most common non-operating assets are minority holdings in other companies (which are not consolidated). You can find the book value of these holdings on the balance sheet, but see if you can convert to market value. (I apply a price to book ratio, based on the sector that the company is in to the book value).
+
+#### Used In
+- [Value of Equity](#value-of-equity)
+
+</details for="(lv3) Cross holdings and other Non-operating Assets">
 </details for="(lv2) Value of Equity">
 
 <details open id="value-of-options"><summary><b>--(lv2) Value of Options</b></summary>
 
+```
+IF Have employee options outstanding:
+    "Value of all options outstanding" in the "Option value" sheet
+ELSE:
+    0
+```
+
+#### Used In
+- [Value of Equity in Common Stock](#value-of-equity-in-common-stock)
+
+#### Components
+- [Value of all options outstanding](#value-of-all-options-outstanding)
+
+<details open id="value-of-all-options-outstanding"><summary><b>---(lv3) Value of all options outstanding</b></summary>
+
+```
+Value of all options outstanding = Value per option * Number of warrants (options) outstanding
+```
+
+#### Used In
+- [Value of Options](#value-of-options)
+
+#### Components
+- [Value per option](#value-per-option)
+- [Number of warrants (options) outstanding](#number-of-options-outstanding)
+
+<details open id="value-per-option"><summary><b>----(lv4) Value per Option</b></summary>
+
+Use the Black-Scholes model to value the options.
+
+```
+Value per Option = (e**((0 - Annualized dividend yield on stock) * Option expiration (in years)))
+                 * Adjusted S * NORMSDIST(d1)
+                 - Option Strike Price * (e**((0 - T. Bond Rate) * Option expiration (in years))) * NORMSDIST(d2)
+```
+
+#### Used In
+- [Value of all options outstanding](#value-of-all-options-outstanding)
+
+#### Components
+- Annualized dividend yield on stock
+- Option expiration (in years)
+- [Black-Scholes - Adjusted S](#black-scholes-adjusted-s)
+- [NORMSDIST](#normsdist)
+- [Black-Scholes - d1](#black-scholes-d1)
+- Option Strike Price - This is also known as Adjusted K
+- [T. Bond Rate (use Riskfree rate for this)](#riskfree-rate)
+- [Black-Scholes - d2](#black-scholes-d2)
+
+<details open id="black-scholes-adjusted-s"><summary><b>-----(lv5) Black-Scholes - Adjusted S</b></summary>
+
+```
+Adjusted S = (Stock Price * Number of Shares outstanding + Value per Option * Number of Warrants) / (Number of Shares outstanding + Number of Warrants)
+```
+
+This formula would cause a circular dependency error. Solve it with iterative calculation.
+
+#### Used In
+- [Value per Option](#value-per-option)
+
+#### Components
+- [Value per Option](#value-per-option)
+- Stock Price
+- Number of Warrants
+- Number of Shares outstanding
+
+</details for="(lv5) Black-Scholes - Adjusted S">
+
+<details open id="normsdist"><summary<b>-----(lv5) NORMSDIST</b></summary>
+
+`NORMSDIST` is a function to get the probabilty that a value is between 0 and a given input in a standard normal distribution.
+
+Here is an example:
+
+![normsdist](media/normsdist.gif)
+
+In the above image, α is 1.53. What is the probability that x is less than or equal 1.53? By entering `NORMSDIST(1.53)` we get a value of `93.70%`.
+
+#### Used In
+- [Value per Option](#value-per-option)
+
+</details for="(lv5) NORMSDIST">
+
+<details open id="black-scholes-d1"><summary><b>-----(lv5) Black-Scholes - d1</b></summary>
+
+```
+d1 = (Log_e(Adjusted S / Option Strike Price) + (Div. Adj. interest rate + (Variance/2)) * Option expiration (in years))
+     / (((Variance/2)**0.5) * (Option expiration (in years) ** 0.5))
+```
+
+`Log_e` is Log function with the base e (Euler's number)
+
+#### Used In
+- [Value per Option](#value-per-option)
+
+#### Components
+- [Black-Scholes - Adjusted S](#black-scholes-adjusted-s)
+- Option Strike Price - This is also known as Adjusted K
+- [Black-Scholes - Div. Adj. interest rate](#black-scholes-div-adj-interest-rate)
+- [Black-Scholes - Variance](#black-scholes-variance)
+- Option expiration (in years)
+
+<details open id="black-scholes-div-adj-interest-rate"><summary><b>------(lv6) Black-Scholes - Div. Adj. interest rate</b></summary>
+
+```
+Div. Adj. interest rate = T. Bond Rate - Annualized dividend yield on stock
+```
+
+#### Used In
+- [Black-Scholes - d1](#black-scholes-d1)
+
+#### Components
+- [T. Bond Rate (use Riskfree rate for this)](#riskfree-rate)
+- Annualized dividend yield on stock
+
+</details for="(lv6) Black-Scholes - Div. Adj. interest rate">
+
+<details open id="black-scholes-variance"><summary><b>------(lv6) Black-Scholes - Variance</b></summary>
+
+```
+Variance = Standard deviation on stock price ** 2
+```
+
+#### Used In
+- [Black-Scholes - d1](#black-scholes-d1)
+
+#### Components
+- [Standard deviation on stock price](#standard-deviation-on-stock-price)
+
+<details open id="standard-deviation-on-stock-price"><summary><b>-------(lv7) Standard deviation on stock price</b></summary>
+
+If you have a standard deviation for your stock, enter that number. If not, use the industry average standard deviation from the worksheet.
+
+#### Used In
+- [Black-Scholes - Variance](#black-scholes-variance)
+
+</details for="(lv7) Standard deviation on stock price">
+</details for="(lv6) Black-Scholes - Variance">
+</details for="(lv5) Black-Scholes - d1">
+
+<details open id="black-scholes-d2"><summary><b>-----(lv5) Black-Scholes - d2</b></summary>
+
+```
+d2 = d1 - ((Variance**0.5) * (Option expiration (in years) ** 0.5))
+```
+
+#### Used In
+- [Value per Option](#value-per-option)
+- [Black Scholes - d1](#black-scholes-d1)
+
+#### Components
+- [Black Scholes - d1](#black-scholes-d1)
+- [Black Scholes - Variance](#black-scholes-variance)
+- Option expiration (in years)
+
+</details for="(lv5) Black-Scholes - d2">
+
+</details for="(lv4) Value per Option">
+
+<details open id="number-of-options-outstanding"><summary><b>----(lv4) Number of options outstanding</b></summary>
+
+Check your company's annual report or 10K. If it does have options outstanding, enter the total number here (vested and non vested, in the money and out…).
+
+#### Used In
+- [Value of Options](#value-of-options)
+
+</details for="(lv4) Number of options outstanding">
+
+</details for="(lv3) Value of all options outstanding">
 </details for="(lv2) Value of Options">
 </details for="(lv1) Value of Equity in Common Stock">
