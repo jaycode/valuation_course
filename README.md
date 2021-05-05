@@ -97,6 +97,8 @@ Terminal Value = Terminal Cash Flow / (Terminal Cost of Capital - Revenue Growth
 
 #### Components
 - [FCFF/Terminal Cash Flow](#fcff)
+- [Terminal Cost of Capital](#terminal-cost-of-capital)
+- [Revenue Growth Rate](#revenue-growth-rate)
 
 <details open id="fcff"><summary><b>-------(lv7) FCFF</b></summary>
 
@@ -252,6 +254,7 @@ In the GameStop's case, it was set at a constant 2% from year 2 all the way thro
 #### Used In
 - [Revenues](#revenues)
 - [Terminal Reinvestment](#terminal-reinvestment)
+- [Terminal Value](#terminal-value)
 
 </details for="(lv11) Revenue growth rate">
 </details for="(lv10) Revenues">
@@ -859,6 +862,7 @@ To get the Mature Market ERP, find the "Total Equity Risk Premium" of United Sta
 
 #### Used In
 - [Cost of Capital](#cost-of-capital)
+- [Terminal Value](#terminal-value)
 
 #### Components
 - [Riskfree Rate](#riskfree-rate)
