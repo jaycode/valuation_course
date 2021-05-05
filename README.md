@@ -60,7 +60,7 @@ Probability of failure is determined qualitatively.
 <details open id="sum-of-pv"><summary><b>----(lv4) Sum of PV</b></summary>
 
 ```
-Sum of PV = PV(Terminal Value) + PV(CF over next 10 years)
+Sum of PV = PV(Terminal Value) + PV(Non-terminal Cash Flow)
 ```
 
 #### Used In
@@ -68,7 +68,7 @@ Sum of PV = PV(Terminal Value) + PV(CF over next 10 years)
 
 #### Components
 - [PV(Terminal Value)](#pv-terminal-value)
-- [PV(CF over next 10 years)](#pv-cf-over-next-10-years)
+- [PV(Non-terminal Cash Flow)](#pv-non-terminal-cash-flow)
 
 
 <details open id="pv-terminal-value"><summary><b>-----(lv5) PV(Terminal Value)</b></summary>
@@ -90,7 +90,7 @@ PV(Terminal Value) = Terminal Value * Cumulated Discount Factor
 Terminal Value = Terminal Cash Flow / (Terminal Cost of Capital - Revenue Growth Rate)
 ```
 
-Terminal Cash Flow is also known as **FCFF (Free Cash Flow to Firm) of the terminal year**.
+**Terminal Cash Flow** is also known as **FCFF (Free Cash Flow to Firm) of the terminal year**.
 
 #### Used In
 - [PV(Terminal Value)](#pv-terminal-value)
@@ -108,7 +108,7 @@ FCFF = After-tax EBIT - Reinvestment
 
 #### Used In
 - [Terminal Value](#terminal-value)
-- [PV(CF over next 10 years)](#pv-cf-over-next-10-years)
+- [PV(Non-terminal Cash Flow)](#pv-non-terminal-cash-flow)
 
 #### Components
 - [After-tax EBIT](#after-tax-ebit)
@@ -911,7 +911,7 @@ ELSE:
 </details for="(lv7) FCFF">
 </details for="(lv6) Terminal Value">
 </details for="(lv5) PV(Terminal Value)">
-<details open id="pv-cf-over-next-10-years"><summary><b>-----(lv5) PV(CF over next 10 years)</b></summary>
+<details open id="pv-cf-non-terminal-cash-flow"><summary><b>-----(lv5) PV(Non-terminal Cash Flow)</b></summary>
 
 Cash Flow for each year is the present value of [FCFF](#fcff).
 
