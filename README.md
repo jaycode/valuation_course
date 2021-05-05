@@ -911,7 +911,7 @@ ELSE:
 </details for="(lv7) FCFF">
 </details for="(lv6) Terminal Value">
 </details for="(lv5) PV(Terminal Value)">
-<details open id="pv-cf-non-terminal-cash-flow"><summary><b>-----(lv5) PV(Non-terminal Cash Flow)</b></summary>
+<details open id="pv-non-terminal-cash-flow"><summary><b>-----(lv5) PV(Non-terminal Cash Flow)</b></summary>
 
 Cash Flow for each year is the present value of [FCFF](#fcff).
 
