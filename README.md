@@ -1,15 +1,15 @@
-# valuation_course
-Various code snippets for the Valuation Course by Prof. Aswath Damodaran.
+# Valuation Course
+My documentation and code snippets for the Valuation Course by Prof. Aswath Damodaran.
 
-## Cheatsheet
+## Cheatsheet for Intrinsic Valuation
 These functions and formulas were taken directly from this Excel spreadsheet: [Valuation of GameStop (January 28, 2021)](http://www.stern.nyu.edu/~adamodar/pc/blog/GameStop2021.xlsx)
 
 ### How to read this Cheatsheet
 Each component in this cheatsheet is nested at increasing levels. I have also indented with the dash (`-`) character to make the nesting a bit easier to visually distinguish.
 
-You may click on the heading of each component to toggle the detailed view of that component and its child components.
+*You may click on the heading of each component to toggle the detailed view of that component and its child components.*
 
-Reading linearly is not advisable, you will quickly get lost once the levels reaches 10+ deep. Make use of the "Used In", "Components", and "Details" links to navigate through the formulas.
+Reading linearly is not advisable, you will quickly get lost once the levels reaches 10+ deep. Make use of the **Used In**, **Components**, **Details**, and **Related** links to navigate through the formulas.
 
 ---
 
@@ -180,15 +180,15 @@ EBIT for the first year is calculated with this function:
 IF Have lease commitments:
     IF Have R&D to capitalize:
         Operating Income or EBIT
-        + Adjustment to Operating Earnings from Operating lease converter sheet
-        + Adjustment to Operating Income from R&D converter sheet
+        + Adjustment to Operating Income from leases
+        + Adjustment to Operating Income from R&D
     ELSE:
         Operating Income or EBIT
-        + Adjustment to Operating Earnings from Operating lease converter sheet
+        + Adjustment to Operating Income from leases
 ELSE:
     IF Have R&D to capitalize:
         Operating Income or EBIT
-        + Adjustment to Operating Income from R&D converter sheet
+        + Adjustment to Operating Income from R&D
     ELSE:
         Operating Income or EBIT
 ```
@@ -205,6 +205,8 @@ EBIT = EBIT margin * Revenues
 #### Components
 - [EBIT margin](#ebit-margin)
 - [Revenues](#revenues)
+- [Adjustment to Operating Income from leases](#adjustment-to-operating-income-from-leases)
+- [Adjustment to Operating Income from R&D](#adjustment-to-operating-income-from-rnd)
 
 <details open id="ebit-margin"><summary><b>----------(lv10) EBIT margin</b></summary>
 EBIT margin is decided qualitatively. It is unique to each company.
@@ -258,7 +260,82 @@ In the GameStop's case, it was set at a constant 2% from year 2 all the way thro
 
 </details for="(lv11) Revenue growth rate">
 </details for="(lv10) Revenues">
+
+<details open id="adjustment-to-operating-income-from-leases"><summary><b>----------(lv10) Adjustment to Operating Income from leases</b></summary>
+
+```
+Adjustment to Operating Income from leases = Operating lease expense in the current year - Depreciation on Operating Lease Asset
+```
+
+#### Used In
+- [EBIT](#ebit)
+
+#### Components
+- Operating lease expense in the current year
+- [Depreciation on Operating Lease Asset](#depreciation-on-operating-lease-asset)
+
+#### Related
+- [Adjustment to Total Debt Outstanding from leases](#adjustment-to-total-debt-outstanding-from-leases)
+
+<details open id="depreciation-on-operating-lease-asset"><summary><b>-----------(lv11) Depreciation on Operating Lease Asset</b></summary>
+
+```
+Depreciation on Operating Lease Asset = Debt Value of Leases / (Number of years the lease is known + Number of years embedded in the lease estimation)
+```
+
+#### Used In
+- [Adjustment to Operating Income from leases](#adjustment-to-operating-income-from-leases)
+
+#### Components
+- [Debt Value of Leases / Adjustment to Total Debt outstanding from leases](#adjustment-to-total-debt-outstanding-from-leases)
+- Number of years the lease is known
+- [Number of years embedded in the lease estimation](#number-of-years-embedded-in-the-lease-estimation)
+
+</details for="(lv11) Depreciation on Operating Lease Asset">
+</details for="(lv10) Adjustment to Operating Income from leases">
+
+<details open id="adjustment-to-operating-income-from-rnd"><summary><b>----------(lv10) Adjustment to Operating Income from R&D</b></summary>
+
+```
+Adjustment to Operating Income from R&D = Current year's R&D expense - Amortization of R&D Asset for the current year
+```
+
+#### Used In
+- [EBIT](#ebit)
+
+#### Components
+- Current year's R&D expense
+- [Amortization of R&D Asset for the current year](#amortization-of-rnd-asset-for-the-current-year)
+
+#### Related
+- [Value of Research Assets](#value-of-research-assets)
+
+<details open id="amortization-of-rnd-asset-for-the-current-year"><summary><b>-----------(lv11) Amortization of R&D Asset for the current year</b></summary>
+
+This value is calculated for the assumed length of R&D lifetime with the formula of
+
+```
+Amortization of R&D Asset for the current year = sum of Amortized portion of R&D Expenses from previous years
+```
+
+To calculate the **Amortized portion of R&D Expenses from previous years**, we multiply each year's expense from the previous assumed R&D lifetime by the assumed amortization rate `1 / R&D lifetime`.
+
+For example, if the length of R&D lifetime is assumed to be five years, then each amortized portion of the previous five years is `R&D Expense * (1 / 5)`.
+
+Here is the table display for this calculation:
+
+![Amortization of R&D Asset for the current year](media/amort_rnd_asset_for_curyear.png)
+
+#### Used In
+- [Adjustment to Operating Income from R&D](#adjustment-to-operating-income-from-rnd)
+
+#### Related
+- [Unamortized portion of R&D Expenses](#unamortized-portion-of-rnd-expenses)
+
+</details for="(lv11) Amortization of R&D Asset for the current year">
+</details for="(lv10) Adjustment to Operating Income from R&D">
 </details for="(lv9) EBIT">
+
 <details open id="nol"><summary><b>---------(lv9) NOL (Net Operating Losses)</b></summary>
 The company may have Net Operating Losses from prior years that may be used to reduce tax calculations for the subsequent years.
 
@@ -266,6 +343,7 @@ The company may have Net Operating Losses from prior years that may be used to r
 - [After-tax EBIT](#after-tax-ebit)
 
 </details for="(lv9) NOL">
+
 <details open id="tax-rate-for-ebit-calculation"><summary><b>---------(lv9) Tax Rate for EBIT calculation</b></summary>
 
 In the spreadsheet, the tax rates for the first five years are constant, set to the **Effective Tax Rate**, and then increase/decrease linearly until the terminal year.
@@ -587,6 +665,7 @@ ELSE ("Actual Rating"):
 - [Est. Market Value of Straight Debt](#est-market-value-of-straight-debt)
 - [Est. Market Value of Straight Debt in Convertible](#est-market-value-of-straight-debt-in-convertible)
 - [Cost of Debt](#cost-of-debt)
+- [PV of Expected lease commitments](#pv-of-expected-lease-commitments)
 
 #### Components
 - ["Estimated Cost of Debt" in the "Synthetic Rating" sheet](#estimated-cost-of-debt-in-the-synthetic-rating-sheet)
@@ -717,11 +796,103 @@ ELSE:
 
 <details open id="adjustment-to-total-debt-outstanding-from-leases"><summary><b>------------------(lv18) Adjustment to Total Debt Outstanding from leases</b></summary>
 
-To get this value, compute the `sum of PV(future lease commitments)`
+To get this value, compute the `sum of PV(expected lease commitments)`
+
+Expected lease commitments are the expected lease expenses in the future, both for the foreseeable future and beyond that.
+
+Here is the calculation table for this component:
+
+![Adjustment to Total Debt Outstanding from Leases](media/adj_debt_from_leases.png)
+
+Lease commitments for the foreseeable years are gathered from the financial statements, and then beyond that determined qualitatively.
 
 #### Used In
 - [Value of Debt in Operating Leases](#value-of-debt-in-operating-leases)
+- [Invested Capital](#invested-capital)
+- [Depreciation on Operating Lease Asset](#depreciation-on-operating-lease-asset)
 
+#### Components
+- PV of lease commitments
+- [PV of Expected lease commitments](#pv-of-expected-lease-commitments)
+
+#### Related
+- [Adjustment to Operating Income from leases](#adjustment-to-operating-income-from-leases)
+
+<details open id="pv-of-expected-lease-commitments"><summary><b>-------------------(lv19) PV of Expected lease commitments</b></summary>
+
+PV of Expected lease commitments in the foreseeable years is calculated by the following formula:
+
+```
+PV of Expected lease commitment in a foreseeable year = Expected lease commitment for that year / (1 + Pre-tax Cost of Debt) ** Number of year in the future
+```
+
+PV of Expected lease commitments beyond the foreseeable years is determined by the following function:
+
+```
+IF Number of years embedded in the estimate > 0:
+    (Expected lease commitments * (1 - (1 + Pre-tax Cost of Debt)**(-Number of years embedded in the estimate)) / Pre-tax Cost of Debt)
+    / (1 + Pre-tax Cost of Debt)**(Number of years the lease is known)
+ELSE:
+    Expected lease commitments / (1 + Pre-tax Cost of Debt)**(Number of years the lease is known + 1)
+```
+
+#### Used In
+- [Adjustment to Total Debt Outstanding from leases](#adjustment-to-total-debt-outstanding-from-leases)
+
+#### Components
+- [Expected lease commitments](#expected-lease-commitments)
+- [Pre-tax Cost of Debt](#pre-tax-cost-of-debt)
+- Number of years the lease is known
+
+<details open id="expected-lease-commitments"><summary><b>--------------------(lv20) Expected lease commitments</b></summary>
+
+Expected lease commitments are divided into two categories:
+
+- Leases for the foreseeable years, and
+- leases beyond the foreseeable years.
+
+For the latter, the estimation is done qualitatively, usually through some sort of average over the known number of years.
+
+
+When calculating **PV of Expected lease commitments**, the lease commitments for the foreseeable years can be used directly, but the commitments beyond that must be converted into an annuity for ten years with the following function:
+
+```
+IF Expected lease commitments beyond the foreseeable years > 0:
+    IF Number of years embedded in the lease estimation > 0:
+        Expected lease commitments beyond the foreseeable years / Number of years embedded in the lease estimation
+    ELSE:
+        Expected lease commitments beyond the foreseeable years
+ELSE:
+    0
+```
+
+#### Used In
+- [PV of Expected lease commitments](#pv-of-expected-lease-commitments)
+
+#### components
+- Expected lease commitments beyond the foreseeable years
+- [Number of years embedded in the lease estimation](#number-of-years-embedded-in-the-lease-estimation)
+
+<details open id="number-of-years-embedded-in-the-lease-estimation"><summary><b>---------------------(lv21) Number of years embedded in the lease estimation</b></summary>
+
+This is a number that tells us how many years does the total **Expected lease commitments beyond the foreseeable years** covers, assuming that the annual lease commitments are going to be the same with the **expected lease commitments in the foreseeable years**.
+
+```
+IF Expected lease commitments beyond the foreseeable years > 0:
+    ROUND(Expected lease commitments beyond the foreseeable years / AVERAGE(Expected lease commitments for the foreseeable years))
+```
+
+#### Used In
+- [Expected lease commitments](#expected-lease-commitments)
+- [Depreciation on Operating Lease Asset](#depreciation-on-operating-lease-asset)
+
+#### Components
+- Expected lease commitments beyond the foreseeable years
+- Expected lease commitments for the foreseeable years
+
+</details for="(lv21) Number of years embedded in the lease estimation">
+</details for="(lv20) Expected lease commitments">
+</details for="(lv19) PV of Expected lease commitments">
 </details for="(lv18) Adjustment to Total Debt Outstanding from leases">
 </details for="(lv17) Value of Debt in Operating Leases">
 </details for="(lv16) Market Value of Debt">
@@ -880,6 +1051,13 @@ ROIC for each year before the terminal year is calculated with the following for
 this year's ROIC = this year's After-tax EBIT / Invested Capital
 ```
 
+#### Used In
+- [ROIC](#roic)
+
+#### Components
+- [After-tax EBIT](#after-tax-ebit)
+- [Invested Capital](#invested-capital)
+
 <details open id="invested-capital"><summary><b>------------(lv12) Invested Capital</b></summary>
 
 ```
@@ -888,25 +1066,98 @@ IF Have lease commitments:
         Book Value of Equity
         + Book Value of Debt
         - Cash and Marketable Securities
-        + Adjustment to Total Debt outstanding from Operating lease converter sheet
-        + Value of Research Asset from R&D converter sheet
+        + Adjustment to Total Debt Outstanding from leases
+        + Value of Research Assets
     ELSE:
         Book Value of Equity
         + Book Value of Debt
         - Cash and Marketable Securities
-        + Adjustment to Total Debt outstanding from Operating lease converter sheet
+        + Adjustment to Total Debt Outstanding from leases
 ELSE:
     IF Have R&D to capitalize:
         Book Value of Equity
         + Book Value of Debt
         - Cash and Marketable Securities
-        + Value of Research Asset from R&D converter sheet
+        + Value of Research Assets
     ELSE:
         Book Value of Equity
         + Book Value of Debt
         - Cash and Marketable Securities
 ```
 
+#### Used In
+- [Pre-terminal ROIC](#pre-terminal-roic)
+
+#### Components
+- [Book Value of Equity](#book-value-of-equity)
+- [Book Value of Debt](#book-value-of-debt)
+- [Cash and Marketable Securities](#cash-and-marketable-securities)
+- [Adjustment to Total Debt Outstanding from leases](#adjustment-to-total-debt-outstanding-from-leases)
+- [Value of Research Assets](#value-of-research-assets)
+
+<details open id="book-value-of-equity"><summary><b>-------------(lv13) Book Value of Equity</b></summary>
+
+Enter the book value of equity (total) from the end of the most recent time period (i.e. the most recent balance sheet). This book equity will include everything - paid in capital, retained earnings etc. and may even be negative for companies that have been losing money for a while.
+
+#### Used In
+- [Invested Capital](#invested-capital)
+
+</details for="(lv13) Book Value of Equity">
+
+<details open id="book-value-of-debt"><summary><b>-------------(lv13) Book Value of Debt</b></summary>
+
+Book Value of Debt is also called "Total Debt" in the balance sheet.
+
+#### Used In
+- [Invested Capital](#invested-capital)
+- [Debt](#debt)
+
+</details for="(lv13) Book Value of Debt">
+
+<details open id="cash-and-marketable-securities"><summary><b>-------------(lv13) Cash and Marketable Securities</b></summary>
+
+Enter the cash balance from the most recent balance sheet. This should include marketable securities.
+
+Cash and Marketable Securities is also called "Cash, Cash Equivalents & Short Term Investments" in the balance sheet.
+
+#### Used In
+- [Invested Capital](#invested-capital)
+
+</details for="(lv13) Cash and Marketable Securities">
+
+<details open id="value-of-research-assets"><summary><b>-------------(lv13) Value of Research Assets</b></summary>
+
+This is the sum of all Unamortized portion of R&D Expenses as shown here:
+
+![Value of Research Assets](media/value_of_research_assets.png)
+
+#### Used In
+- [Invested Capital](#invested-capital)
+
+#### Components
+- [Unamortized portion of R&D Expenses](#unamortized-portion-of-rnd-expenses)
+
+#### Related
+- [Adjustment to Operating Income from R&D](#adjustment-to-operating-income-from-rnd)
+
+<details open id="unamortized-portion-of-rnd-expenses"><summary><b>--------------(lv14) Unamortized portion of R&D Expenses</b></summary>
+
+This value is calculated for the assumed length of R&D lifetime. For example, if the length of R&D lifetime is assumed to be five years, then get the R&D Expenses for the previous five years, reduce each year's expense with the amortized portion.
+
+If we are calculating the value for year 2020, for instance, then the R&D Expense of year 2015 would worth 0 since 100% of its portion is amortized, followed by 20% of year 2016's R&D Expense, then 40%, all the way to 100% in the year 2020's R&D Expense.
+
+```
+Unamortized portion of R&D Expenses = R&D Expense * unamortized portion
+```
+
+#### Used In
+- [Value of Research Assets](#value-of-research-assets)
+
+#### Related
+- [Amortization of R&D Asset for the current year](#amortization-of-rnd-asset-for-the-current-year)
+
+</details for="(lv14) Unamortized portion of R&D Expenses">
+</details for="(lv13) Value of Research Assets">
 </details for="(lv12) Invested Capital">
 </details for="(lv11) Pre-terminal ROIC">
 </details for="(lv10) ROIC">
@@ -935,13 +1186,11 @@ ELSE:
     Book Value of Debt
 ```
 
-Book Value of Debt is also called Total Debt in the balance sheet.
-
 #### Used In
 - [Value of Equity](#value-of-equity)
 
-#### Componenets
-
+#### Components
+- [Book Value of Debt](#book-value-of-debt)
 - [Adjustment to Total Debt Outstanding from leases](#adjustment-to-total-debt-outstanding-from-leases)
 
 </details for="(lv3) Debt">
