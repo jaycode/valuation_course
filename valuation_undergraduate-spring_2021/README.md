@@ -45,6 +45,12 @@
 - Post-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session8Atest.pdf
 - Post-class Test Solution: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/postclass/session8Asoln.pdf
 
+7:12 Updating Earnings
+10:58 Capital Expenditures
+18:42 Start of Class - Estimating the Cost of Debt
+22:49 Estimating Synthetic Ratings
+
+
 ## Session 9: Earnings to Cash Flows
 - Video: https://www.youtube.com/watch?v=r2_ZVAowM5Y&list=PLUkh9m2BorqlJsEfix7R9jtSXClFZhGvC
 - Start-class Test: http://people.stern.nyu.edu/adamodar/pdfiles/eqnotes/tests/cftests2.pdf

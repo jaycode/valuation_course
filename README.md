@@ -46,7 +46,7 @@ Value of Equity = Value of operating assets - Debt - Minority Interests + Cash +
 <details open id="value-of-operating-assets"><summary><b>---(lv3) Value of operating assets</b></summary>
 
 ```
-Value of operating assets = Sum of PV * (1 - Probability of failure) + Proceeds if Firm fails * Probability of failure
+Value of operating assets = Sum of PV(Cash Flow) * (1 - Probability of failure) + Proceeds if Firm fails * Probability of failure
 ```
 
 Probability of failure is determined qualitatively.
@@ -55,12 +55,12 @@ Probability of failure is determined qualitatively.
 - [Value of Equity](#value-of-equity)
 
 #### Components
-- [Sum of PV](#sum-of-pv)
+- [Sum of PV(Cash Flow)](#sum-of-pv-cash-flow)
 
-<details open id="sum-of-pv"><summary><b>----(lv4) Sum of PV</b></summary>
+<details open id="sum-of-pv-cash-flow"><summary><b>----(lv4) Sum of PV(Cash Flow)</b></summary>
 
 ```
-Sum of PV = PV(Terminal Value) + PV(Non-terminal Cash Flow)
+Sum of PV(Cash Flow) = PV(Terminal Value) + PV(Non-terminal Cash Flow)
 ```
 
 #### Used In
@@ -78,7 +78,7 @@ PV(Terminal Value) = Terminal Value * Cumulated Discount Factor
 ```
 
 #### Used In
-- [Sum of PV](#sum-of-pv)
+- [Sum of PV(Cash Flow)](#sum-of-pv-cash-flow)
 
 #### Components
 - [Terminal Value](#terminal-value)
@@ -97,8 +97,8 @@ Terminal Value = Terminal Cash Flow / (Terminal Cost of Capital - Revenue Growth
 
 #### Components
 - [FCFF/Terminal Cash Flow](#fcff)
-- [Terminal Cost of Capital](#terminal-cost-of-capital)
-- [Revenue Growth Rate](#revenue-growth-rate)
+- [Terminal Cost of Capital](#terminal-coc)
+- [Revenue Growth Rate](#rev-growth-rate)
 
 <details open id="fcff"><summary><b>-------(lv7) FCFF</b></summary>
 
@@ -172,7 +172,9 @@ ELSE:
 - [NOL](#nol)
 - [Tax Rate for EBIT calculation](#tax-rate-for-ebit-calculation)
 
-<details open id="ebit"><summary><b>---------(lv9) EBIT</b></summary>
+<details open id="ebit"><summary><b>---------(lv9) EBIT (or Operating Income - depending on the valuation style)</b></summary>
+
+Depending on the company style, you may use either EBIT or Operating Income. I  can't tell for sure which one was used in the GameStop valuation since the numbers are different from those in Yahoo Finance, but it was likely to be Operating Income since the "Stories to Numbers" sheet shows "Operating margin" instead of "EBIT margin".
 
 EBIT for the first year is calculated with this function:
 
@@ -203,10 +205,14 @@ EBIT = EBIT margin * Revenues
 - [After-tax EBIT](#after-tax-ebit)
 
 #### Components
+- Operating Income or EBIT
 - [EBIT margin](#ebit-margin)
-- [Revenues](#revenues)
+- [Revenues](#rev)
 - [Adjustment to Operating Income from leases](#adjustment-to-operating-income-from-leases)
 - [Adjustment to Operating Income from R&D](#adjustment-to-operating-income-from-rnd)
+
+#### Related
+- [EBIT plus lease adjustment](#ebit-plus-lease-adjustment)
 
 <details open id="ebit-margin"><summary><b>----------(lv10) EBIT margin</b></summary>
 EBIT margin is decided qualitatively. It is unique to each company.
@@ -215,26 +221,26 @@ Here are the factors Used In the GameStop spreadsheet:
 
 1. Revenue growth rate for next year.
    This one is purely qualitative.
-2. Target Pre=tax operating margin
-   This is the EBIT as % of sales in year 10. To get this number, look at the company's current pre-tax operating margin and the average for the industry.
+2. Target Pre-tax EBIT margin (also known as target pre-tax operating margin)
+   This is the EBIT as % of sales in year 10. To get this number, look at the company's current pre-tax EBIT margin and the average for the industry.
 3. Year of convergence
    The year in which the current margin will converge on target.
 
 For each "year" in the valuation (the year next to the base year is year 1) starting from year 2, set the EBIT Margin with the result of this function:
 ```
 IF year > Year of convergence:
-    use Target Pre-tax operating margin
+    use Target Pre-tax EBIT margin
 ELSE:
-    Target Pre-tax operating margin - ((Target Pre-tax operating margin - previous year's EBIT margin) / (Year of convergence - year))
+    Target Pre-tax operating margin - ((Target Pre-tax EBIT margin - previous year's EBIT margin) / (Year of convergence - year))
 ```
 
-In other words, simply grow linearly between year 2 and the terminal year, capped at "Target pre-tax operating margin".
+In other words, simply grow linearly between year 2 and the terminal year, capped at **Target pre-tax EBIT margin**.
 
 #### Used In
 - [EBIT](#ebit)
 
 </details for="(lv10) EBIT margin">
-<details open id="revenues"><summary><b>----------(lv10) Revenues</b></summary>
+<details open id="rev"><summary><b>----------(lv10) Revenues</b></summary>
 
 ```
 this year's Revenue = previous year's Revenue * (1 + Revenue growth rate)
@@ -245,16 +251,18 @@ this year's Revenue = previous year's Revenue * (1 + Revenue growth rate)
 - [Pre-terminal Reinvestment](#pre-terminal-reinvestment)
 
 #### Components
-- [Revenue growth rate](#revenue-growth-rate)
+- Target Pre-tax EBIT margin
+- Year of convergence
+- [Revenue growth rate](#rev-growth-rate)
 
-<details open id="revenue-growth-rate"><summary><b>-----------(lv11) Revenue growth rate</b></summary>
+<details open id="rev-growth-rate"><summary><b>-----------(lv11) Revenue growth rate</b></summary>
 
 Just like EBIT margin growth, the Revenue growth rates are decided qualitatively throughout the years.
 
 In the GameStop's case, it was set at a constant 2% from year 2 all the way through the terminal year. In the case Amazon in the 2000's, it started at 150% and grow half each year down to a stable growth value of 6% in the terminal year.
 
 #### Used In
-- [Revenues](#revenues)
+- [Revenues](#rev)
 - [Terminal Reinvestment](#terminal-reinvestment)
 - [Terminal Value](#terminal-value)
 
@@ -269,6 +277,7 @@ Adjustment to Operating Income from leases = Operating lease expense in the curr
 
 #### Used In
 - [EBIT](#ebit)
+- [EBIT plus lease adjustment](#ebit-plus-lease-adjustment)
 
 #### Components
 - Operating lease expense in the current year
@@ -389,7 +398,7 @@ ELSE:
 - [FCFF](#fcff)
 
 #### Components
-- [Revenues](#revenues)
+- [Revenues](#rev)
 - [Sales to Capital Ratio](#sales-to-capital-ratio)
 
 <details open id="sales-to-capital-ratio"><summary><b>----------(lv10) Sales to Capital Ratio</b></summary>
@@ -417,7 +426,7 @@ ELSE:
 - [FCFF](#fcff)
 
 #### Components
-- [Revenue growth rate](#revenue-growth-rate) in the terminal year
+- [Revenue growth rate](#rev-growth-rate) in the terminal year
 - [Terminal ROIC](#terminal-roic)
 
 <details open id="roic"><summary><b>----------(lv10) ROIC (Return on Invested Capital)</b></summary>
@@ -450,9 +459,9 @@ ELSE:
 - [ROIC (Return on Invested Capital)](#roic)
 
 #### Components
-- [Cost of Capital](#cost-of-capital)
+- [Cost of Capital](#coc)
 
-<details open id="cost-of-capital"><summary><b>------------(lv12) Cost of Capital (COC)</b></summary>
+<details open id="coc"><summary><b>------------(lv12) Cost of Capital (COC)</b></summary>
 
 Control the year 1 and terminal year Cost of Capital. For the years between year 1 and the terminal year, qualitatively determine the growth function.
 
@@ -463,10 +472,10 @@ Control the year 1 and terminal year Cost of Capital. For the years between year
 - [ROIC](#roic)
 
 #### Components
-- [Initial Cost of Capital](#initial-cost-of-capital)
-- [Terminal Cost of Capital](#terminal-cost-of-capital)
+- [Initial Cost of Capital](#initial-coc)
+- [Terminal Cost of Capital](#terminal-coc)
 
-<details open id="initial-cost-of-capital"><summary><b>-------------(lv13) Initial Cost of Capital</b></summary>
+<details open id="initial-coc"><summary><b>-------------(lv13) Initial Cost of Capital</b></summary>
 
 Either enter as a setting or use the "Cost of capital worksheet" to determine its value.
 
@@ -477,15 +486,15 @@ Cost of Capital (COC) = Weight of Equity in COC * Cost of Equity + Weight of Deb
 ```
 
 #### Used In
-- [Cost of Capital](#cost-of-capital)
+- [Cost of Capital](#coc)
 
 #### Components
 - [Weight of Equity in COC](#weight-of-equity-in-coc)
-- [Cost of Equity](#cost-of-equity)
+- [Cost of Equity](#coe)
 - [Weight of Debt in COC](#weight-of-debt-in-coc)
-- [Cost of Debt](#cost-of-debt)
+- [Cost of Debt](#cod)
 - [Weight of Preferred Stock in COC](#weight-of-preferred-stock-in-coc)
-- [Cost of Preferred Stock](#cost-of-preferred-stock)
+- [Cost of Preferred Stock](#cop)
 
 <details open id="weight-of-equity-in-coc"><summary><b>--------------(lv14) Weight of Equity in COC</b></summary>
 
@@ -494,7 +503,7 @@ Weight of Equity in COC = Market Value of Equity / Market Value of Capital Struc
 ```
 
 #### Used In
-- [Initial Cost of Capital](#initial-cost-of-capital)
+- [Initial Cost of Capital](#initial-coc)
 
 #### Components
 - [Market Value of Equity](#market-value-of-equity)
@@ -536,14 +545,14 @@ Market Value of Capital Structure = Market Value of Equity + Market Value of Deb
 
 </details for="(lv14) Weight of Equity in COC">
 
-<details open id="cost-of-equity"><summary><b>--------------(lv14) Cost of Equity (COE)</b></summary>
+<details open id="coe"><summary><b>--------------(lv14) Cost of Equity (COE)</b></summary>
 
 ```
 Cost of Equity = Riskfree Rate + Levered Beta for Equity * ERP used in COC
 ```
 
 #### Used In
-- [Initial Cost of Capital](#initial-cost-of-capital)
+- [Initial Cost of Capital](#initial-coc)
 
 #### Components
 - [Riskfree Rate](#riskfree-rate)
@@ -554,7 +563,7 @@ Cost of Equity = Riskfree Rate + Levered Beta for Equity * ERP used in COC
 This should be today's long term riskfree rate. If you are working with a currency where the government has default risk, clean up the government bond rate to make it riskfree (by subtracting the default spread for the government).
 
 #### Used In
-- [Cost of Equity](#cost-of-equity)
+- [Cost of Equity](#coe)
 
 </details for="(lv15) Riskfree Rate">
 
@@ -568,13 +577,13 @@ If not direct input, use the unlevered beta calculated above for the levered bet
 IF "Direct Input":
     Use Levered Beta
 ELSE:
-    Unlevered Beta * (1+(1-Tax Rate)*(Market Value of Debt / Market Value of Equity)))
+    Unlevered Beta * (1+(1-Marginal Tax Rate)*(Market Value of Debt / Market Value of Equity)))
 ```
 
 #### Used In
-- [Cost of Equity](#cost-of-equity)
-- [Pre-tax Cost of Debt](#pre-tax-cost-of-debt)
-- ["Estimated Cost of Debt" in the "Synthetic Rating" sheet](#estimated-cost-of-debt-in-the-synthetic-rating-sheet)
+- [Cost of Equity](#coe)
+- [Pre-tax Cost of Debt](#ptx-cod)
+- [Estimated COD in Synthetic Rating](#estimated-cod-in-synthetic-rating)
 
 #### Components
 - [Unlevered Beta](#unlevered-beta)
@@ -585,11 +594,11 @@ ELSE:
 
 ```
 IF "Single Business(US)":
-    Lookup "Unlevered Beta" from the "Industry Average Beta (US)" sheet
+    Lookup "Industry Name" in the "Industry Average Beta (US)" to find "Unlevered Beta"
 ELSE IF "Multibusiness(US)":
     Get the weighted average of Unlevered Beta in the "Multi Business (US Industry Averages)" table
 ELSE IF "Single Business(Global)":
-    Lookup "Unlevered Beta" from the "Industry Average Beta (Global)" sheet
+    Lookup "Industry Name" in the "Industry Average Beta (Global)" to find "Unlevered Beta"
 ELSE:
     Get the weighted average of Unlevered Beta in the "Multi Business (Global Industry Averages)" table
 ```
@@ -647,16 +656,16 @@ Interest Expense * (1 - (1 + Pre-tax Cost of Debt) ** (-Average Maturity)) / Int
 - [Market Value of Debt](#market-value-of-debt)
 
 #### Components
-- [Pre-tax Cost of Debt](#pre-tax-cost-of-debt)
+- [Pre-tax Cost of Debt](#ptx-cod)
 
-<details open id="pre-tax-cost-of-debt"><summary><b>------------------(lv18) Pre-tax Cost of Debt</b></summary>
+<details open id="ptx-cod"><summary><b>------------------(lv18) Pre-tax Cost of Debt</b></summary>
 
 ```
-IF "Direct Input":
+IF Approach for estimating Pre-tax COD = "Direct Input":
     Direct input of Pre-tax Cost of Debt
-ELSE IF "Synthetic Rating":
-    "Estimated Cost of Debt" in the "Synthetic Rating" sheet
-ELSE ("Actual Rating"):
+ELSE IF Approach for estimating Pre-tax COD = "Synthetic Rating":
+    Estimated COD in Synthetic Rating
+ELSE (IF Approach for estimating Pre-tax COD = "Actual Rating"):
     Rating Spread = Lookup "actual rating" in the rating spread table in the "Synthetic Rating" to get "rating spread"
     Pre-tax Cost of Debt = Risk-free Rate + Rating Spread
 ```
@@ -664,26 +673,38 @@ ELSE ("Actual Rating"):
 #### Used In
 - [Est. Market Value of Straight Debt](#est-market-value-of-straight-debt)
 - [Est. Market Value of Straight Debt in Convertible](#est-market-value-of-straight-debt-in-convertible)
-- [Cost of Debt](#cost-of-debt)
+- [Cost of Debt](#cod)
 - [PV of Expected lease commitments](#pv-of-expected-lease-commitments)
+- [Interest Expense plus lease adjustment](#interest-expense-plus-lease-adjustment)
 
 #### Components
-- ["Estimated Cost of Debt" in the "Synthetic Rating" sheet](#estimated-cost-of-debt-in-the-synthetic-rating-sheet)
+- [Estimated COD in Synthetic Rating](#estimated-cod-in-synthetic-rating)
 - [Riskfree Rate](#riskfree-rate)
 
-<details open id="estimated-cost-of-debt-in-the-synthetic-rating-sheet"><summary><b>-------------------(lv19) "Estimated Cost of Debt" in the "Synthetic Rating" sheet</b></summary>
+<details open id="estimated-cod-in-synthetic-rating"><summary><b>-------------------(lv19) Estimated COD in Synthetic Rating</b></summary>
 
 ```
   Estimated Cost of Debt = Risk-free Rate + Estimated Company Default Spread + Estimated Country Default Spread (if any)
 ```
 
+The calculation of this component will lead to a circular reference problem for the case where the firm has a lease commitment, since the lease adjustment requires Cost Of Debt to calculate.
+
+The circular dependency issue is as illustrated below:
+
+![circ_ref.png](media/circ_ref.png)
+
+To deal with this circular dependency issue, we iterate the calculation of Estimated COD in Synthetic Rating until the Pre-tax COD converges. The initial value of the Pre-tax COD is set to the `Riskfree Rate + Estimated Country Default Spread`.
+
 #### Used In
-- [Pre-tax Cost of Debt](#pre-tax-cost-of-debt)
+- [Pre-tax Cost of Debt](#ptx-cod)
 
 #### Components
 - [Riskfree Rate](#riskfree-rate)
 - [Estimated Company Default Spread](#estimated-company-default-spread)
 - [Estimated Country Default Spread (if any)](#estimated-country-default-spread-if-any)
+
+#### Related
+- [Interest Coverage Ratio](#interest-coverage-ratio)
 
 <details open id="estimated-company-default-spread"><summary><b>--------------------(lv20) Estimated Company Default Spread</b></summary>
 
@@ -691,26 +712,116 @@ The formula depends on whether the company has a large market cap (> \\$5billion
 
 ```
 IF Large Market Cap:
-    Lookup "interest coverage ratio" in the large manufacturing firms table to get "spread"
+    Lookup "Interest Coverage Ratio" in the large manufacturing firms table to get "spread"
 ELSE IF Small Market Cap:
-    Lookup "interest coverage ratio" in the smaller and riskier firms table to get "spread"
+    Lookup "Interest Coverage Ratio" in the smaller and riskier firms table to get "spread"
 ELSE:
     (there is a missing reference in the spreadsheet)
 ```
 
-#### Used In
-- ["Estimated Cost of Debt" in the "Synthetic Rating" sheet](#estimated-cost-of-debt-in-the-synthetic-rating-sheet)
+The spread can be looked up from this web page: [Ratings, Interest Coverage Ratios and Default Spread](http://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ratings.htm)
 
+#### Used In
+- [Estimated COD in Synthetic Rating](#estimated-cod-in-synthetic-rating)
+
+#### Components
+- [Interest Coverage Ratio](#interest-coverage-ratio)
+
+<details open id="interest-coverage-ratio"><summary><b>---------------------(lv21) Interest Coverage Ratio</b></summary>
+
+This is the ratio that tells us how capable the earnings of the company is to pay the current interest expense. This is used in the default spread estimation (i.e. the likelihood of the company to default on their debts).
+
+```
+IF stable firm:
+    IF Interest Expense plus lease adjustment = 0:
+        100000
+    ELSE:
+        IF current EBIT plus lease adjustment < 0:
+            -100000
+        ELSE:
+            current EBIT plus lease adjustment / current Interest Expense plus lease adjustment
+ELSE:
+    IF Interest Expense in terminal year plus lease adjustment = 0:
+        100000
+    ELSE:
+        IF EBIT in terminal year plus lease adjustment < 0:
+            -100000
+        ELSE:
+            EBIT in terminal year plus lease adjustment / Interest Expense in terminal year plus lease adjustment
+```
+
+This function will cause a circular dependency when `Approach for estimating Pre-tax COD = "Synthetic Rating"` because [EBIT plus lease adjustment](#ebit-plus-lease-adjustment) and [Adjustment to Total Debt Outstanding from leases](#adjustment-to-total-debt-outstanding-from-leases) also need [Pre-tax COD](#ptx-cod).
+
+To deal with this circular dependency issue, we iterate the calculation of Estimated COD in Synthetic Rating until the Pre-tax COD converges. Learn more about this from the [documentation of Estimated COD in Synthetic Rating](#estimated-cod-in-synthetic-rating).
+
+#### Used In
+- [Estimated Company Default Spread](#estimated-company-default-spread)
+
+#### Components
+- [Interest Expense plus lease adjustment](#interest-expense-plus-lease-adjustment)
+- [EBIT plus lease adjustment](#ebit-plus-lease-adjustment)
+- Operating Income or EBIT
+- Interest Expense
+
+#### Related
+- [Estimated COD in Synthetic Rating](#estimated-cod-in-synthetic-rating)
+
+<details open id="interest-expense-plus-lease-adjustment"><summary><b>----------------------(lv22) Interest Expense plus lease adjustment (Current Interest Expense in the spreadsheet)</b></summary>
+
+```
+IF Have lease commitments:
+    Interest Expense + Adjustment to Total Debt Outstanding from leases * Pre-tax COD
+ELSE:
+    Interest Expense
+```
+
+#### Used In
+- [Interest Coverage Ratio](#interest-coverage-ratio)
+
+#### Components
+- Interest Expense
+- [Adjustment to Total Debt Outstanding from leases](#adjustment-to-total-debt-outstanding-from-leases)
+- [Pre-Tax COD](#ptx-cod)
+
+</details for="(lv22) Interest Expense plus lease adjustment">
+
+<details open id="ebit-plus-lease-adjustment"><summary><b>----------------------(lv22) EBIT plus lease adjustment (Current EBIT in the spreadsheet)</b></summary>
+
+This is similar to the adjusted EBIT used in the current year, but without the R&D adjustment. Why is it like that? I don't know, but probably because the [default spread table](http://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ratings.htm) was calculated without including the R&D adjustments for the companies involved (this is purely my speculation).
+
+The function used to determine this value is as follows:
+
+```
+IF Have lease commitments:
+    Operating Income or EBIT
+    + Adjustment to Operating Income from leases
+ELSE:
+    Operating Income or EBIT
+```
+
+#### Used in
+- [Interest Coverage Ratio](#interest-coverage-ratio)
+
+#### Components
+- Operating Income or EBIT
+- [Adjustment to Operating Income from leases](#adjustment-to-operating-income-from-leases)
+
+#### Related
+- [EBIT](#ebit)
+
+</details for="(lv22) Current EBIT">
+</details for="(lv21) Interest Coverage Ratio">
 </details for="(lv20) Estimated Company Default Spread">
+
 <details open id="estimated-country-default-spread-if-any"><summary><b>--------------------(lv20) Estimated Country Default Spread (if any)</b></summary>
 
 Lookup the country the company is incorporated in in the Country equity risk premiums sheet to get Adjusted Default Spread.
 
 #### Used In
-- ["Estimated Cost of Debt" in the "Synthetic Rating" sheet](#estimated-cost-of-debt-in-the-synthetic-rating-sheet)
+- [Estimated COD in Synthetic Rating](#estimated-cod-in-synthetic-rating)
 
 </details for="(lv20) Estimated Country Default Spread (if any)">
-</details for="(lv19) \"Estimated Cost of Debt" in the \"Synthetic Rating\" sheet">
+</details for="(lv19) \"Estimated Cost of Debt" in \"Synthetic Rating\"">
 </details for="(lv18) Pre-tax Cost of Debt">
 </details for="(lv17) Est. Market Value of Straight Debt">
 <details open id="est-market-value-of-straight-debt-in-convertible"><summary><b>-----------------(lv17) Est. Market Value of Straight Debt in Convertible</b></summary>
@@ -726,7 +837,7 @@ Interest Expense on Convertible * (1 - (1 + Pre-tax Cost of Debt) ** (-Maturity 
 
 #### Components
 - [Interest Expense on Convertible](#interest-expense-on-convertible)
-- [Pre-tax Cost of Debt](#pre-tax-cost-of-debt)
+- [Pre-tax Cost of Debt](#ptx-cod)
 - [Maturity of Convertible Bond](#maturity-of-convertible-bond)
 - [Book Value of Convertible Debt](#book-value-of-convertible-debt)
 - [Market Value of Convertible](#market-value-of-convertible)
@@ -796,7 +907,7 @@ ELSE:
 
 <details open id="adjustment-to-total-debt-outstanding-from-leases"><summary><b>------------------(lv18) Adjustment to Total Debt Outstanding from leases</b></summary>
 
-To get this value, compute the `sum of PV(expected lease commitments)`
+To get this value, compute the `Sum of PV(Cash Flow)(expected lease commitments)`
 
 Expected lease commitments are the expected lease expenses in the future, both for the foreseeable future and beyond that.
 
@@ -810,6 +921,7 @@ Lease commitments for the foreseeable years are gathered from the financial stat
 - [Value of Debt in Operating Leases](#value-of-debt-in-operating-leases)
 - [Invested Capital](#invested-capital)
 - [Depreciation on Operating Lease Asset](#depreciation-on-operating-lease-asset)
+- [Interest Expense plus lease adjustment](#interest-expense-plus-lease-adjustment)
 
 #### Components
 - PV of lease commitments
@@ -841,7 +953,7 @@ ELSE:
 
 #### Components
 - [Expected lease commitments](#expected-lease-commitments)
-- [Pre-tax Cost of Debt](#pre-tax-cost-of-debt)
+- [Pre-tax Cost of Debt](#ptx-cod)
 - Number of years the lease is known
 
 <details open id="expected-lease-commitments"><summary><b>--------------------(lv20) Expected lease commitments</b></summary>
@@ -928,7 +1040,7 @@ The `sum(Country/Region Weighted ERP)` is the Total Weighted ERP.
 The ERP can be looked up from the "Country equity risk premiums" sheet or [Country Default Spreads and Risk Premiums](http://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ctryprem.html) page, column "Equity Risk Premium".
 
 #### Used In
-- [Cost of Equity](#cost-of-equity)
+- [Cost of Equity](#coe)
 
 </details for="(lv15) ERP used in COC">
 </details for="(lv14) Cost of Equity">
@@ -940,7 +1052,7 @@ Weight of Debt in COC = Market Value of Debt / Market Value of Capital Structure
 ```
 
 #### Used In
-- [Initial Cost of Capital](#initial-cost-of-capital)
+- [Initial Cost of Capital](#initial-coc)
 
 #### Components
 - [Market Value of Debt](#market-value-of-debt)
@@ -948,27 +1060,19 @@ Weight of Debt in COC = Market Value of Debt / Market Value of Capital Structure
 
 </details for="(lv14) Weight of Debt in COC">
 
-<details open id="cost-of-debt"><summary><b>--------------(lv14) Cost of Debt</b></summary>
+<details open id="cod"><summary><b>--------------(lv14) Cost of Debt</b></summary>
 
 ```
-Cost of Debt = Pre-tax Cost of Debt * (1 - Tax Rate)
+Cost of Debt = Pre-tax Cost of Debt * (1 - Marginal Tax Rate)
 ```
 
 #### Used In
-- [Initial Cost of Capital](#initial-cost-of-capital)
+- [Initial Cost of Capital](#initial-coc)
 
 #### Components
-- [Pre-tax Cost of Debt](#pre-tax-cost-of-debt)
-- [Tax Rate for COC calculation](#tax-rate-for-coc-calculation)
+- [Pre-tax Cost of Debt](#ptx-cod)
+- Marginal Tax Rate
 
-<details open id="tax-rate-for-coc-calculation"><summary><b>---------------(lv15) Tax Rate for COC calculation</b></summary>
-
-This component is set to **Effective Tax Rate**.
-
-#### Used In
-- [Cost of Debt](#cost-of-debt)
-
-</details for="(lv15) Tax Rate for COC calculation">
 </details for="(lv14) Cost of Debt">
 
 <details open id="weight-of-preferred-stock-in-coc"><summary><b>--------------(lv14) Weight of Preferred Stock in COC</b></summary>
@@ -978,7 +1082,7 @@ Weight of Preferred Stock in COC = Market Value of Preferred stock / Market Valu
 ```
 
 #### Used In
-- [Initial Cost of Capital](#initial-cost-of-capital)
+- [Initial Cost of Capital](#initial-coc)
 
 #### Components
 - [Market Value of Preferred Stock](#market-value-of-preferred-stock)
@@ -998,7 +1102,7 @@ Find the Number of Preferred Shares and the Current Market Price per Share in th
 </details for="(lv15) Market Value of Preferred Stock">
 </details for="(lv14) Weight of Preferred Stock in COC">
 
-<details open id="cost-of-preferred-stock"><summary><b>--------------(lv14) Cost of Preferred Stock</b></summary>
+<details open id="cop"><summary><b>--------------(lv14) Cost of Preferred Stock</b></summary>
 
 ```
 Cost of Preferred Stock = Annual Dividend per Preferred Share / Current Market Price per Preferred Share
@@ -1007,12 +1111,12 @@ Cost of Preferred Stock = Annual Dividend per Preferred Share / Current Market P
 Find the Annual Dividend per Preferred Share and Current Market Price per Preferred Share in the financial statements.
 
 #### Used In
-- [Initial Cost of Capital](#initial-cost-of-capital)
+- [Initial Cost of Capital](#initial-coc)
 
 </details for="(lv14) Cost of Preferred Stock">
 
 </details for="(lv13) Initial Cost of Capital">
-<details open id="terminal-cost-of-capital"><summary><b>-------------(lv13) Terminal Cost of Capital</b></summary>
+<details open id="terminal-coc"><summary><b>-------------(lv13) Terminal Cost of Capital</b></summary>
 
 This is the Cost of Capital in the terminal year.
 
@@ -1032,7 +1136,7 @@ ELSE:
 To get the Mature Market ERP, find the "Total Equity Risk Premium" of United States from this page: [Country Default Spreads and Risk Premiums](http://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ctryprem.html).
 
 #### Used In
-- [Cost of Capital](#cost-of-capital)
+- [Cost of Capital](#coc)
 - [Terminal Value](#terminal-value)
 
 #### Components
@@ -1089,13 +1193,13 @@ ELSE:
 - [Pre-terminal ROIC](#pre-terminal-roic)
 
 #### Components
-- [Book Value of Equity](#book-value-of-equity)
-- [Book Value of Debt](#book-value-of-debt)
+- [Book Value of Equity](#equity-bv)
+- [Book Value of Debt](#debt-bv)
 - [Cash and Marketable Securities](#cash-and-marketable-securities)
 - [Adjustment to Total Debt Outstanding from leases](#adjustment-to-total-debt-outstanding-from-leases)
 - [Value of Research Assets](#value-of-research-assets)
 
-<details open id="book-value-of-equity"><summary><b>-------------(lv13) Book Value of Equity</b></summary>
+<details open id="equity-bv"><summary><b>-------------(lv13) Book Value of Equity</b></summary>
 
 Enter the book value of equity (total) from the end of the most recent time period (i.e. the most recent balance sheet). This book equity will include everything - paid in capital, retained earnings etc. and may even be negative for companies that have been losing money for a while.
 
@@ -1104,7 +1208,7 @@ Enter the book value of equity (total) from the end of the most recent time peri
 
 </details for="(lv13) Book Value of Equity">
 
-<details open id="book-value-of-debt"><summary><b>-------------(lv13) Book Value of Debt</b></summary>
+<details open id="debt-bv"><summary><b>-------------(lv13) Book Value of Debt</b></summary>
 
 Book Value of Debt is also called "Total Debt" in the balance sheet.
 
@@ -1165,16 +1269,43 @@ Unamortized portion of R&D Expenses = R&D Expense * unamortized portion
 </details for="(lv8) Reinvestment">
 </details for="(lv7) FCFF">
 </details for="(lv6) Terminal Value">
+
+<details open id="cumulated-discount-factor"><summary><b>------(lv6) Cumulated Discount Factor</b></summary>
+
+For each year in the DCF calculation, calculate the Cumulated Discount Factor as follows:
+
+```
+IF the year after the current year:
+    1 / (1 + this year's COC)
+ELSE:
+    previous year's Cumulated Discount Factor / (1 + this year's COC)
+```
+
+#### Used In
+- [PV(Terminal Value)](#pv-terminal-value)
+- [PV(Non-terminal Cash Flow)](#pv-non-terminal-cashflow)
+
+#### components
+- previous year's Cumulated Discount Factor
+- [Cost of Capital](#coc)
+
+</details for="(lv6) Cumulated Discount Factor">
 </details for="(lv5) PV(Terminal Value)">
 <details open id="pv-non-terminal-cash-flow"><summary><b>-----(lv5) PV(Non-terminal Cash Flow)</b></summary>
 
-Cash Flow for each year is the present value of [FCFF](#fcff).
+```
+PV(this year's FCFF) = this year's FCFF * this year's Cumulated Discount Factor
+```
 
 #### Used In:
-- [Sum of PV](#sum-of-pv)
+- [Sum of PV(Cash Flow)](#sum-of-pv-cash-flow)
+
+#### Components
+- [FCFF](#fcff)
+- [Cumulated Discount Factor](#cumulated-discount-factor)
 
 </details for="(lv5) PV(CF over next 10 years)">
-</details for="(lv4) Sum of PV">
+</details for="(lv4) Sum of PV(Cash Flow)">
 </details for="(lv3) Value of operating assets">
 
 <details open id="debt"><summary><b>---(lv3) Debt</b></summary>
@@ -1190,7 +1321,7 @@ ELSE:
 - [Value of Equity](#value-of-equity)
 
 #### Components
-- [Book Value of Debt](#book-value-of-debt)
+- [Book Value of Debt](#debt-bv)
 - [Adjustment to Total Debt Outstanding from leases](#adjustment-to-total-debt-outstanding-from-leases)
 
 </details for="(lv3) Debt">
