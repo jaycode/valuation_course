@@ -13,7 +13,7 @@ Reading linearly is not advisable, you will quickly get lost once the levels rea
 
 ---
 
-<details open id="value-of-equity-in-common-stocks"><summary><b>-(lv1) Value of Equity in Common Stock</b></summary>
+<details open id="value-of-equity-in-common-stock"><summary><b>-(lv1) Value of Equity in Common Stock</b></summary>
 
 This is the final value that we are looking for. Divided by the number of shares, this becomes the Value/Share, that can be directly compared with the current price of the stock to determine whether it is under/overvalued.
 
@@ -32,7 +32,7 @@ Value of Equity = Value of operating assets - Debt - Minority Interests + Cash +
 ```
 
 #### Used In
-- [Value of Equity in Common Stocks](#value-of-equity-in-common-stocks)
+- [Value of Equity in Common Stock](#value-of-equity-in-common-stock)
 
 #### Components
 
@@ -399,9 +399,9 @@ ELSE:
 
 #### Components
 - [Revenues](#rev)
-- [Sales to Capital Ratio](#sales-to-capital-ratio)
+- [Sales to Capital Ratio](#sales-to-capital)
 
-<details open id="sales-to-capital-ratio"><summary><b>----------(lv10) Sales to Capital Ratio</b></summary>
+<details open id="sales-to-capital"><summary><b>----------(lv10) Sales to Capital Ratio</b></summary>
 
 A ratio that tells us how efficient the company converts their capital to sales. Look at the industry averages in the worksheet or consult this page: [Capital Expenditures by Sector (US)](http://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/capex.html)
 
@@ -548,7 +548,7 @@ Market Value of Capital Structure = Market Value of Equity + Market Value of Deb
 <details open id="coe"><summary><b>--------------(lv14) Cost of Equity (COE)</b></summary>
 
 ```
-Cost of Equity = Riskfree Rate + Levered Beta for Equity * ERP used in COC
+Cost of Equity = Riskfree Rate + Levered Beta for Equity * ERP for COC
 ```
 
 #### Used In
@@ -557,7 +557,7 @@ Cost of Equity = Riskfree Rate + Levered Beta for Equity * ERP used in COC
 #### Components
 - [Riskfree Rate](#riskfree-rate)
 - [Levered Beta for Equity](#levered-beta-for-equity)
-- [ERP used in COC](#erp-used-in-coc)
+- [ERP for COC](#erp-for-coc)
 
 <details open id="riskfree-rate"><summary><b>---------------(lv15) Riskfree Rate</b></summary>
 This should be today's long term riskfree rate. If you are working with a currency where the government has default risk, clean up the government bond rate to make it riskfree (by subtracting the default spread for the government).
@@ -615,8 +615,14 @@ And then,
 Weighted Average of Unlevered Beta = Sum(Unlevered Beta for a business * Estimated Values for that business / sum of Estimated Values for all businesses)
 ```
 
-The EV/Sales can be looked up from the "Industry Average Beta (US/Global)" sheets.
+The Unlevered Beta and EV/Sales tables can be read/downloaded from the following links in prof. Damodaran's website (the Excel Spreadheet versions are said to be more complete):
 
+- For Betas:
+  - [Betas by Sector (US)](http://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/Betas.html) or [Excel spreadsheet](http://www.stern.nyu.edu/~adamodar/pc/datasets/betas.xls).
+  - [Betas by Sector (Global) - Excel Spreadsheet](http://www.stern.nyu.edu/~adamodar/pc/datasets/betaGlobal.xls) (no webpage for the global data, it seems)
+- For EV/Sales:
+  - [Revenue Multiples by Sector (US)](http://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/psdata.html) or [Excel spreadsheet](http://www.stern.nyu.edu/~adamodar/pc/datasets/psdata.xls)
+  - [Revenue Multiples by Sector (Global)](http://www.stern.nyu.edu/~adamodar/pc/datasets/psGlobal.xls)
 
 #### Used In
 - [Levered Beta for Equity](#levered-beta-for-equity)
@@ -645,11 +651,11 @@ Est. Market Value of Debt = Est. Market Value of Straight Debt + Est. Market Val
 
 ```
 Est. Market Value of Straight Debt =
-Interest Expense * (1 - (1 + Pre-tax Cost of Debt) ** (-Average Maturity)) / Interest Expense
-+ Book Value of Straight Debt / (1 + Pre-Tax Cost of Debt) ** Average Maturity
+Interest Expense * (1 - (1 + Pre-tax Cost of Debt) ** (-Average Debt Maturity)) / Interest Expense
++ Book Value of Straight Debt / (1 + Pre-Tax Cost of Debt) ** Average Debt Maturity
 ```
 
-- Average Maturity is generally found in the footnotes of financial statements.
+- Average Debt Maturity is generally found in the footnotes of financial statements.
 - Book Value of Straight Debt is also commonly known as "Total Debt" in the Balance Sheet (at least in Yahoo Finance).
 
 #### Used In
@@ -815,7 +821,7 @@ ELSE:
 
 <details open id="estimated-country-default-spread-if-any"><summary><b>--------------------(lv20) Estimated Country Default Spread (if any)</b></summary>
 
-Lookup the country the company is incorporated in in the Country equity risk premiums sheet to get Adjusted Default Spread.
+Lookup the country the company is incorporated in in the Country equity risk premiums sheet to get Adjusted Default Spread. The latest Country Equity Risk Premiums sheet can be downloaded from prof. Damodaran's website [here](http://www.stern.nyu.edu/~adamodar/pc/datasets/ctryprem.xlsx) (sheet name is "Regional Weighted Averages").
 
 #### Used In
 - [Estimated COD in Synthetic Rating](#estimated-cod-in-synthetic-rating)
@@ -829,7 +835,7 @@ Lookup the country the company is incorporated in in the Country equity risk pre
 ```
 Est. Market Value of Straight Debt in Convertible =
 Interest Expense on Convertible * (1 - (1 + Pre-tax Cost of Debt) ** (-Maturity of Convertible Bond)) / Pre-tax Cost of Debt
-+ Book Value of Convertible Debt / (1 + Pre-tax Cost Of Debt) ** Market Value of Convertible
++ Book Value of Convertible Debt / (1 + Pre-tax Cost Of Debt) ** Maturity of Convertible Bond
 ```
 
 #### Used In
@@ -1010,7 +1016,7 @@ IF Expected lease commitments beyond the foreseeable years > 0:
 </details for="(lv16) Market Value of Debt">
 </details for="(lv15) Levered Beta for Equity">
 
-<details open id="erp-used-in-coc"><summary><b>---------------(lv15) ERP used in COC (Equity Risk Premium used in Cost of Capital)</b></summary>
+<details open id="erp-for-coc"><summary><b>---------------(lv15) ERP for COC (Equity Risk Premium for Cost of Capital)</b></summary>
 
 ```
 IF approach is "Will Input":
@@ -1037,12 +1043,12 @@ Country/Region Weighted ERP = ERP for the country/region * Weight
 
 The `sum(Country/Region Weighted ERP)` is the Total Weighted ERP.
 
-The ERP can be looked up from the "Country equity risk premiums" sheet or [Country Default Spreads and Risk Premiums](http://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ctryprem.html) page, column "Equity Risk Premium".
+The ERP can be looked up from the "Country equity risk premiums" sheet or [Country Default Spreads and Risk Premiums](http://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ctryprem.html) page, column "Equity Risk Premium". The Excel sheet - which is more complete - can be downloaded [here](http://www.stern.nyu.edu/~adamodar/pc/datasets/ctryprem.xlsx), from the sheet name "Regional Weighted Averages".
 
 #### Used In
 - [Cost of Equity](#coe)
 
-</details for="(lv15) ERP used in COC">
+</details for="(lv15) ERP for COC">
 </details for="(lv14) Cost of Equity">
 
 <details open id="weight-of-debt-in-coc"><summary><b>--------------(lv14) Weight of Debt in COC</b></summary>
@@ -1368,8 +1374,16 @@ This is the additional tax due, if the cash is trapped cash. If your concern is 
 
 <details open id="cash-from-new-issue"><summary><b>---(lv3) Cash from new issue</b></summary>
 
+```
+Cash from new issue = New shares issued * Expected issuance price
+```
+
 #### Used In
 - [Value of Equity](#value-of-equity)
+
+#### Components
+- New shares issued
+- Expected issuance price
 
 </details for="(lv3) Cash from new issue">
 
@@ -1411,7 +1425,7 @@ Value of all options outstanding = Value per option * Number of warrants (option
 
 #### Components
 - [Value per option](#value-per-option)
-- [Number of warrants (options) outstanding](#number-of-options-outstanding)
+- [Number of warrants (options) outstanding](#num-options)
 
 <details open id="value-per-option"><summary><b>----(lv4) Value per Option</b></summary>
 
@@ -1455,7 +1469,7 @@ This formula would cause a circular dependency error. Solve it with iterative ca
 
 </details for="(lv5) Black-Scholes - Adjusted S">
 
-<details open id="normsdist"><summary<b>-----(lv5) NORMSDIST</b></summary>
+<details open id="normsdist"><summary><b>-----(lv5) NORMSDIST</b></summary>
 
 `NORMSDIST` is a function to get the probabilty that a value is between 0 and a given input in a standard normal distribution.
 
@@ -1546,7 +1560,7 @@ d2 = d1 - ((Variance**0.5) * (Option expiration (in years) ** 0.5))
 
 </details for="(lv4) Value per Option">
 
-<details open id="number-of-options-outstanding"><summary><b>----(lv4) Number of options outstanding</b></summary>
+<details open id="num-options"><summary><b>----(lv4) Number of options outstanding</b></summary>
 
 Check your company's annual report or 10K. If it does have options outstanding, enter the total number here (vested and non vested, in the money and out…).
 
