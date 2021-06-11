@@ -1,4 +1,4 @@
-# Valuation Course
+embedded in lease# Valuation Course
 My documentation and code snippets for the Valuation Course by Prof. Aswath Damodaran.
 
 ## Cheatsheet for Intrinsic Valuation
@@ -289,7 +289,7 @@ Adjustment to Operating Income from leases = Operating lease expense in the curr
 <details open id="depreciation-on-operating-lease-asset"><summary><b>-----------(lv11) Depreciation on Operating Lease Asset</b></summary>
 
 ```
-Depreciation on Operating Lease Asset = Debt Value of Leases / (Number of years the lease is known + Number of years embedded in the lease estimation)
+Depreciation on Operating Lease Asset = Debt Value of Leases / (Number of years the lease is known + Number of years embedded in lease estimation)
 ```
 
 #### Used In
@@ -298,7 +298,7 @@ Depreciation on Operating Lease Asset = Debt Value of Leases / (Number of years 
 #### Components
 - [Debt Value of Leases / Adjustment to Total Debt outstanding from leases](#adjustment-to-total-debt-outstanding-from-leases)
 - Number of years the lease is known
-- [Number of years embedded in the lease estimation](#number-of-years-embedded-in-the-lease-estimation)
+- [Number of years embedded in lease estimation](#number-of-years-embedded-in-lease-estimation)
 
 </details for="(lv11) Depreciation on Operating Lease Asset">
 </details for="(lv10) Adjustment to Operating Income from leases">
@@ -976,8 +976,8 @@ When calculating **PV of Expected lease commitments**, the lease commitments for
 
 ```
 IF Expected lease commitments beyond the foreseeable years > 0:
-    IF Number of years embedded in the lease estimation > 0:
-        Expected lease commitments beyond the foreseeable years / Number of years embedded in the lease estimation
+    IF Number of years embedded in lease estimation > 0:
+        Expected lease commitments beyond the foreseeable years / Number of years embedded in lease estimation
     ELSE:
         Expected lease commitments beyond the foreseeable years
 ELSE:
@@ -989,9 +989,9 @@ ELSE:
 
 #### components
 - Expected lease commitments beyond the foreseeable years
-- [Number of years embedded in the lease estimation](#number-of-years-embedded-in-the-lease-estimation)
+- [Number of years embedded in lease estimation](#number-of-years-embedded-in-lease-estimation)
 
-<details open id="number-of-years-embedded-in-the-lease-estimation"><summary><b>---------------------(lv21) Number of years embedded in the lease estimation</b></summary>
+<details open id="number-of-years-embedded-in-lease-estimation"><summary><b>---------------------(lv21) Number of years embedded in lease estimation</b></summary>
 
 This is a number that tells us how many years does the total **Expected lease commitments beyond the foreseeable years** covers, assuming that the annual lease commitments are going to be the same with the **expected lease commitments in the foreseeable years**.
 
@@ -1008,7 +1008,7 @@ IF Expected lease commitments beyond the foreseeable years > 0:
 - Expected lease commitments beyond the foreseeable years
 - Expected lease commitments for the foreseeable years
 
-</details for="(lv21) Number of years embedded in the lease estimation">
+</details for="(lv21) Number of years embedded in lease estimation">
 </details for="(lv20) Expected lease commitments">
 </details for="(lv19) PV of Expected lease commitments">
 </details for="(lv18) Adjustment to Total Debt Outstanding from leases">
