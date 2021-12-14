@@ -1,4 +1,4 @@
-embedded in lease# Valuation Course
+# Valuation Course
 My documentation and code snippets for the Valuation Course by Prof. Aswath Damodaran.
 
 ## Cheatsheet for Intrinsic Valuation
