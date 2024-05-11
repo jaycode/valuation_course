@@ -2,7 +2,7 @@
 My documentation and code snippets for the Valuation Course by Prof. Aswath Damodaran.
 
 ## Cheatsheet for Intrinsic Valuation
-These functions and formulas were taken directly from this Excel spreadsheet: [Valuation of GameStop (January 28, 2021)](http://www.stern.nyu.edu/~adamodar/pc/blog/GameStop2021.xlsx)
+These functions and formulas were taken directly from this Excel spreadsheet: [Valuation of GameStop (January 28, 2021)](https://pages.stern.nyu.edu/~adamodar/pc/blog/GameStop2021.xlsx)
 
 ### How to read this Cheatsheet
 Each component in this cheatsheet is nested at increasing levels. I have also indented with the dash (`-`) character to make the nesting a bit easier to visually distinguish.
