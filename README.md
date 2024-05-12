@@ -236,14 +236,13 @@ ELSE:
 
 In other words, simply grow linearly between year 2 and the terminal year, capped at **Target pre-tax EBIT margin**.
 
-
 ### Used In
 - [EBIT](#ebit)
 
 ### Components
-- Target Pre-tax EBIT margin
+- Target pre-tax EBIT margin
+- Previous year's EBIT margin
 - Year of convergence
-- [Revenue growth rate](#rev-growth-rate)
 
 </details for="(lv10) EBIT margin">
 <details open id="rev"><summary><b>----------(lv10) Revenues</b></summary>
